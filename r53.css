@@ -1,0 +1,206 @@
+/* R53 / 1.4.1 — non-modal tower inspector, independent of towers and skills.
+   The inspected tower never replaces, hides, or disables combat controls.
+   No full-screen backdrop, no forced scrolling, no gameplay state changes. */
+#r49-upgrade-backdrop{display:none!important;pointer-events:none!important}
+body.rf-upgrade #rf-inspect-dock{z-index:89!important;pointer-events:none!important}
+body.rf-upgrade #rf-inspect-dock #upgrade-ui{
+  pointer-events:auto!important;touch-action:manipulation;
+  box-shadow:0 8px 24px #0008!important;
+}
+body.rf-upgrade #rf-inspect-dock #upgrade-ui .btn-close:focus-visible,
+body.rf-upgrade #rf-inspect-dock #upgrade-ui .btn-upgrade:focus-visible,
+body.rf-upgrade #rf-inspect-dock #upgrade-ui .btn-sell:focus-visible{
+  outline:2px solid #ffdb90;outline-offset:-2px;
+}
+
+/* Desktop: the tower/skill sidebar never disappears. The inspector occupies a
+   temporary strip BETWEEN the map and that sidebar. Close returns the width. */
+@media (min-width:1024px) and (min-height:601px){
+ :root{--r53-inspector-width:clamp(260px,23vw,332px)}
+ body.rf-upgrade{--r52-dock:216px!important}
+ body.rf-upgrade #bottom-panel{display:flex!important;right:0!important;width:216px!important}
+ body.rf-upgrade #game-wrapper{
+   width:calc(100% - 216px)!important;
+   grid-template-columns:minmax(0,1fr) var(--r53-inspector-width)!important;
+ }
+ body.rf-upgrade #game-wrapper .battle-header{grid-column:1/3!important;grid-row:1!important}
+ body.rf-upgrade #game-wrapper #canvas-shell{grid-column:1!important;grid-row:2!important}
+ body.rf-upgrade #game-wrapper #wave-prep,
+ body.rf-upgrade #game-wrapper #boss-hud,
+ body.rf-upgrade #game-wrapper #r49-wave-state{grid-column:1/3!important}
+ body.rf-upgrade #rf-inspect-dock{
+   display:block!important;position:fixed!important;
+   top:60px!important;bottom:132px!important;left:auto!important;right:216px!important;
+   width:var(--r53-inspector-width)!important;height:auto!important;max-height:none!important;
+   background:transparent!important;border:0!important;padding:4px!important;overflow:hidden!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui{
+   display:flex!important;position:relative!important;inset:auto!important;transform:none!important;
+   width:100%!important;height:100%!important;max-height:none!important;min-height:0!important;
+   flex-direction:column!important;gap:6px!important;overflow:auto!important;
+   padding:10px!important;margin:0!important;
+   border:1px solid #77959f!important;border-radius:10px!important;
+   background:linear-gradient(150deg,#203945f5,#122431f7)!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-paths{
+   display:grid!important;grid-template-columns:1fr!important;gap:8px!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-path{min-height:126px!important}
+}
+
+/* Portrait mobile: a narrow, translucent quick-inspector floats at the UPPER
+   EDGE of the battlefield, not in the bottom dock. 2 upgrade actions, sell and
+   close all remain directly usable without swallowing the whole playfield. */
+@media (max-width:1023px) and (orientation:portrait){
+ body.rf-upgrade #bottom-panel{
+   display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+   grid-template-rows:44px minmax(0,1fr)!important;
+   gap:5px!important;padding:5px max(6px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left))!important;
+ }
+ body.rf-upgrade #bottom-panel #r49-dock-tabs{display:grid!important;visibility:visible!important}
+ body.rf-upgrade #bottom-panel .panel-row{grid-column:1!important;grid-row:2!important}
+ body.rf-upgrade #bottom-panel #skills-panel,
+ body.rf-upgrade #bottom-panel #tower-buttons{display:grid!important}
+ body.rf-upgrade #bottom-panel[data-r49-group=towers] #skills-panel,
+ body.rf-upgrade #bottom-panel[data-r49-group=magic] #tower-buttons{display:none!important}
+ body.rf-upgrade #bottom-panel #r50-build-confirm{display:none!important}
+ body.rf-upgrade #bottom-panel.r50-confirming #r50-build-confirm{display:grid!important}
+ body.rf-upgrade #bottom-panel.r50-confirming #r49-dock-tabs{visibility:hidden!important}
+ body.rf-upgrade #rf-inspect-dock{
+   display:block!important;position:fixed!important;
+   top:calc(59px + env(safe-area-inset-top))!important;bottom:auto!important;
+   left:max(3px,env(safe-area-inset-left))!important;right:max(3px,env(safe-area-inset-right))!important;
+   width:auto!important;height:108px!important;max-height:108px!important;
+   margin:0!important;padding:0!important;overflow:visible!important;
+   background:transparent!important;border:0!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui{
+   display:grid!important;position:relative!important;inset:auto!important;transform:none!important;
+   grid-template-columns:minmax(0,1fr) 94px!important;grid-template-rows:38px 59px!important;
+   gap:3px!important;align-items:stretch!important;
+   width:100%!important;height:108px!important;min-height:0!important;max-height:108px!important;max-width:none!important;
+   margin:0!important;padding:4px!important;overflow:hidden!important;
+   border-radius:9px!important;border:1px solid #80949c!important;
+   background:rgba(20,39,51,.88)!important;
+   backdrop-filter:blur(2px);
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-header{
+   display:flex!important;position:static!important;grid-column:1!important;grid-row:1!important;
+   height:38px!important;min-height:38px!important;margin:0!important;padding:0!important;gap:3px!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-header h3{
+   font-size:13px!important;line-height:1.1!important;white-space:nowrap!important;text-overflow:ellipsis!important;overflow:hidden!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-heading-copy{min-width:0!important;overflow:hidden!important}
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-kicker,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-role,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui #upgrade-prep-rail{display:none!important}
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui #r49-upgrade-info,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .btn-close{
+   display:block!important;flex:0 0 36px!important;min-width:36px!important;width:36px!important;
+   height:38px!important;min-height:38px!important;margin:0!important;padding:0!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .btn-sell{
+   grid-column:2!important;grid-row:1!important;position:static!important;
+   height:38px!important;min-height:38px!important;margin:0!important;padding:2px!important;
+   width:100%!important;font-size:11px!important;white-space:nowrap!important;overflow:hidden!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-paths{
+   display:grid!important;grid-column:1/3!important;grid-row:2!important;
+   grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:59px!important;
+   gap:4px!important;height:59px!important;min-height:0!important;margin:0!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-path{
+   display:flex!important;flex-direction:column!important;justify-content:space-between!important;
+   padding:2px!important;gap:1px!important;height:59px!important;min-height:0!important;overflow:hidden!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-path h4{
+   font-size:11px!important;line-height:1!important;min-height:11px!important;height:11px!important;
+   white-space:nowrap!important;text-overflow:ellipsis!important;overflow:hidden!important;margin:0!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .tier-dots,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-desc,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-next-name,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-branch-role,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-next-desc{display:none!important}
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .btn-upgrade{
+   flex:1 1 auto!important;height:41px!important;min-height:41px!important;max-height:41px!important;
+   margin:0!important;padding:2px!important;font-size:12px!important;line-height:1.1!important;
+ }
+}
+
+/* Short landscape: never hide the right dock. A compact inspector either gets
+   a reserved slim strip (>800px), or floats translucently at the map edge. */
+@media (orientation:landscape) and (max-height:600px){
+ :root{--r53-land-width:182px}
+ body.rf-upgrade{--r52-dock:196px!important;grid-template-columns:minmax(0,1fr) 196px!important}
+ body.rf-upgrade #bottom-panel{
+   display:grid!important;grid-column:2!important;grid-row:1!important;
+   width:100%!important;grid-template-rows:72px 44px minmax(0,1fr)!important;
+   gap:3px!important;
+ }
+ body.rf-upgrade #bottom-panel #r52-wave-summary{display:flex!important}
+ body.rf-upgrade #bottom-panel #wave-prep.show{display:grid!important}
+ body.rf-upgrade #bottom-panel #boss-hud.show{display:flex!important}
+ body.rf-upgrade #bottom-panel #r49-dock-tabs{display:grid!important;visibility:visible!important}
+ body.rf-upgrade #bottom-panel #tower-buttons,
+ body.rf-upgrade #bottom-panel #skills-panel{display:grid!important}
+ body.rf-upgrade #bottom-panel[data-r49-group=towers] #skills-panel,
+ body.rf-upgrade #bottom-panel[data-r49-group=magic] #tower-buttons{display:none!important}
+ body.rf-upgrade #bottom-panel #r50-build-confirm{display:none!important}
+ body.rf-upgrade #bottom-panel.r50-confirming #r50-build-confirm{display:grid!important}
+ body.rf-upgrade #bottom-panel.r50-confirming #r49-dock-tabs{visibility:hidden!important}
+ body.rf-upgrade #rf-inspect-dock{
+   display:block!important;position:fixed!important;
+   top:55px!important;bottom:5px!important;right:196px!important;left:auto!important;
+   width:var(--r53-land-width)!important;height:auto!important;max-height:none!important;
+   margin:0!important;padding:2px!important;border:0!important;background:transparent!important;overflow:hidden!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui{
+   display:flex!important;flex-direction:column!important;gap:3px!important;
+   position:relative!important;inset:auto!important;transform:none!important;
+   width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;min-height:0!important;
+   margin:0!important;padding:5px!important;overflow:hidden!important;
+   border:1px solid #7e939e!important;border-radius:8px!important;
+   background:rgba(20,40,52,.90)!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-header{height:35px!important;min-height:35px!important;flex:none!important;margin:0!important;padding:0!important;gap:2px!important}
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-header h3{font-size:12px!important;white-space:nowrap!important;text-overflow:ellipsis!important;overflow:hidden!important}
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui #r49-upgrade-info,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .btn-close{width:34px!important;min-width:34px!important;height:35px!important;min-height:35px!important;padding:0!important}
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-kicker,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-role,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-desc,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-next-name,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-branch-role,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-next-desc,
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui #upgrade-prep-rail{display:none!important}
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-paths{
+   display:grid!important;grid-template-columns:1fr!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;
+   flex:1 1 auto!important;min-height:0!important;height:auto!important;gap:3px!important;margin:0!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-path{
+   display:flex!important;flex-direction:column!important;justify-content:space-between!important;
+   min-height:0!important;height:100%!important;padding:3px!important;gap:2px!important;overflow:hidden!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .upg-path h4{
+   font-size:11px!important;line-height:1.1!important;min-height:12px!important;height:12px!important;
+   white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .tier-dots{display:none!important}
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .btn-upgrade{
+   display:block!important;height:38px!important;min-height:38px!important;max-height:38px!important;
+   flex:none!important;margin:0!important;padding:2px!important;font-size:11px!important;
+ }
+ body.rf-upgrade #rf-inspect-dock #upgrade-ui .btn-sell{
+   flex:none!important;position:static!important;display:block!important;
+   min-height:36px!important;height:36px!important;margin:0!important;padding:2px!important;font-size:11px!important;
+ }
+}
+/* At adequate landscape widths, reserve inspector space instead of covering
+   enemies or build pads. The bottom controls remain independent and visible. */
+@media (orientation:landscape) and (max-height:600px) and (min-width:800px) and (min-height:350px){
+ body.rf-upgrade #game-wrapper{grid-template-columns:minmax(0,1fr) var(--r53-land-width)!important}
+ body.rf-upgrade #game-wrapper .battle-header{grid-column:1/3!important;grid-row:1!important}
+ body.rf-upgrade #game-wrapper #canvas-shell{grid-column:1!important;grid-row:2!important}
+}
