@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="384" height="209" viewBox="0 0 384 209"><defs>
+<linearGradient id="steel" x2="0.8" y2="1"><stop stop-color="#718897"/><stop offset=".25" stop-color="#344554"/><stop offset=".65" stop-color="#182937"/><stop offset="1" stop-color="#53636b"/></linearGradient>
+<linearGradient id="gold" x2="0.6" y2="1"><stop stop-color="#fff3bf"/><stop offset=".22" stop-color="#d5a451"/><stop offset=".65" stop-color="#7e5128"/><stop offset="1" stop-color="#e9c37a"/></linearGradient>
+<radialGradient id="glow"><stop stop-color="#e9d8ff" stop-opacity=".95"/><stop offset=".45" stop-color="#8872fb" stop-opacity=".55"/><stop offset="1" stop-color="#8872fb" stop-opacity="0"/></radialGradient>
+<linearGradient id="crystal" x2=".75" y2="1"><stop stop-color="#e9d8ff"/><stop offset=".45" stop-color="#8872fb"/><stop offset="1" stop-color="#291d70"/></linearGradient>
+</defs><g transform="translate(192 104)">
+<circle r="67" fill="url(#glow)" opacity=".34"/>
+<path d="M-25 -32 L-4 -39 L24 -27 L37 -8 L29 23 L4 36 L-28 22 L-36 -7 Z" fill="#141a20" stroke="#778796" stroke-width="4"/>
+<path d="M-22 -27 L-3 -34 L20 -23 L31 -6 L24 20 L3 30 L-23 18 L-30 -8 Z" fill="url(#steel)" stroke="url(#gold)" stroke-width="2.2"/>
+<circle r="36" fill="#111a31" stroke="url(#gold)" stroke-width="4"/>
+<circle r="31" fill="#273b60" stroke="#8872fb" stroke-width="1" stroke-dasharray="4 4"/>
+<path d="M0 -43 L9 -27 L0 -13 L-9 -27 Z M43 0 L27 9 L13 0 L27 -9 Z M0 43 L-9 27 L0 13 L9 27 Z M-43 0 L-27 -9 L-13 0 L-27 9 Z" fill="url(#crystal)" stroke="#fff1ca" stroke-width="2"/>
+<path d="M0 -28 L26 0 L0 28 L-26 0Z" fill="#1c2245" stroke="#8872fb" stroke-width="4"/>
+<path d="M0 -26 L12 -8 L22 0 L12 8 L0 26 L-12 8 L-22 0 L-12 -8Z" fill="url(#crystal)"/>
+<circle r="9" fill="#e9d8ff" stroke="url(#gold)" stroke-width="3"/>
+<path d="M0 -51 V-37 M51 0 H37 M0 51 V37 M-51 0 H-37" stroke="url(#gold)" stroke-width="3"/>
+</g></svg>

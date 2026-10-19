@@ -1,0 +1,376 @@
+/* R84 / 1.6.14 — Royal Bastion combat interface. All changes are presentation-only.
+   R76 paths/build pads, 1000x600 logical canvas, cooldown clocks and economy are authoritative. */
+body:is([data-scene="play"],[data-scene="pause"]){--r84-bronze:#b99b68;--r84-slate:#0d202a;--r84-cream:#f6e9c9;}
+body:is([data-scene="play"],[data-scene="pause"]) #hud{align-items:stretch!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #hud .stat{min-height:0!important;padding:4px 8px!important;gap:8px!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #hud .hud-label{font-size:10px!important;margin:0 0 1px!important;letter-spacing:.08em!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #hud .hud-value{font-size:16px!important;line-height:1.12!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #hud .stat-icon{width:24px!important;height:24px!important;min-width:24px!important;outline-offset:0!important;}
+body:is([data-scene="play"],[data-scene="pause"]) .battle-header{max-width:none!important;margin:0!important;}
+body:is([data-scene="play"],[data-scene="pause"]) .battle-actions #pause-btn{font-size:0!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #pause-btn img{display:block;width:21px;height:21px;object-fit:contain;margin:auto;pointer-events:none;}
+body:is([data-scene="play"],[data-scene="pause"]) #gameCanvas{border:1px solid #bc9c62!important;border-radius:3px!important;box-shadow:0 0 0 2px #0a1319,0 0 0 3px #735a3c,0 6px 22px #01070b91!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail{background:linear-gradient(155deg,#293839,#101f29)!important;border:1px solid #9e8558!important;border-radius:6px!important;box-shadow:inset 0 1px #e7c98c35,0 7px 25px #0009!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail::after{content:"";position:absolute;inset:0;pointer-events:none;background:url('images/ui-r84/corner.svg') left top / 36px 36px no-repeat,url('images/ui-r84/corner.svg') right top / 36px 36px no-repeat;opacity:.28;}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons{background:transparent!important;border:0!important;border-radius:5px!important;box-shadow:none!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail .tower-btn{border-color:#927b54!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail .tower-btn:focus-visible,
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill:focus-visible{outline:2px solid #ffe8a5!important;outline-offset:-2px!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #r84-spell-heading{display:flex;align-items:center;gap:7px;padding:5px 7px 3px;color:#f4d9a3;font-size:11px;letter-spacing:.1em;border-bottom:1px solid #8c784f66;flex:0 0 auto;min-width:0;}
+body:is([data-scene="play"],[data-scene="pause"]) #r84-spell-heading img{height:19px;width:19px;object-fit:contain;}
+body:is([data-scene="play"],[data-scene="pause"]) #r84-spell-heading span{color:#9fbeb8;font-size:10px;letter-spacing:0;margin-left:auto;white-space:nowrap;}
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill{min-width:0!important;position:relative!important;border-radius:5px!important;overflow:hidden!important;outline:none;}
+/* Real state comes from SKILLS[id].timer, never from CSS animation or a second clock. */
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill::before{inset:4px!important;z-index:0!important;border-radius:50%!important;width:33px;height:33px;top:5px!important;left:calc(50% - 16.5px)!important;background:conic-gradient(#86e7d1 var(--r54-progress,100%),#354b53 0)!important;opacity:.88!important;mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 2px))!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill::after{display:none!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill .skill-icon{position:relative!important;z-index:1!important;display:flex!important;align-items:center;justify-content:center;max-height:29px!important;min-height:25px!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill .skill-name{position:relative!important;z-index:1!important;font-size:10.5px!important;line-height:1.08!important;white-space:normal!important;overflow-wrap:anywhere!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill .skill-cooldown{position:relative!important;z-index:1!important;font-size:11px!important;line-height:1.08!important;font-variant-numeric:tabular-nums!important;margin:1px 0 0!important;color:#c6dccc!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill[data-r84-state="ready"]{border-color:#91dcb4!important;box-shadow:0 0 0 1px #5ab99288,inset 0 0 13px #42877335!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill[data-r84-state="ready"] .skill-cooldown{color:#a8f8d1!important;font-weight:850!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill[data-r84-state="cooldown"]{border-color:#698a9e!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill[data-r84-state="cooldown"] .skill-cooldown{color:#d0eafb!important;font-weight:850!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill[data-r84-state="locked"]{filter:grayscale(.5);opacity:.68!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill[data-r84-state="locked"] .skill-cooldown{color:#b6bbb8!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill[data-r84-state="active"]{border-color:#edca7a!important;box-shadow:inset 0 0 10px #e7b85a45!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-inspect-idle{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;height:100%;padding:18px!important;text-align:center;}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-inspect-idle img{width:54px;height:54px;opacity:.8;filter:drop-shadow(0 4px 7px #0008);}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-inspect-idle strong{font-size:13px;letter-spacing:.09em;color:#edcf9b;}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-inspect-idle span{font-size:12px;line-height:1.5;color:#b8c9c6;}
+body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve{display:none;}
+body:is([data-scene="play"],[data-scene="pause"]) #r52-wave-summary{font-size:11px!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail .tower-icon-wrapper>img{display:block;object-fit:contain;}
+body:is([data-scene="play"],[data-scene="pause"]) :is(#r54-tower-rail .tower-btn,#skills-panel .r54-skill,.battle-actions button){touch-action:manipulation;}
+@media (min-width:900px) and (min-height:601px){
+ body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper,body:is([data-scene="play"],[data-scene="pause"]).rf-upgrade #game-wrapper{grid-template-rows:43px minmax(0,1fr) 70px 104px!important;gap:4px!important;padding:4px 6px 4px!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-header{grid-row:1!important;min-height:43px!important;height:43px!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #canvas-shell{grid-row:2!important;grid-column:1!important;width:100%!important;height:100%!important;min-height:0!important;justify-content:flex-start!important;align-items:center!important;padding:0!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail{display:block!important;bottom:112px!important;left:6px!important;right:calc(var(--r54-controls) + var(--r54-inspector) + 6px)!important;height:68px!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail .tower-icon-wrapper{height:31px!important;max-height:31px!important;flex-basis:31px!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #wave-prep,body:is([data-scene="play"],[data-scene="pause"]).rf-upgrade #game-wrapper #wave-prep{grid-row:4!important;grid-column:1!important;height:100%!important;max-height:100%!important;min-height:0!important;margin:0!important;padding:4px 8px!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #r49-wave-state{margin-bottom:0!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel{padding:6px 5px!important;gap:4px!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:repeat(3,79px)!important;max-width:none!important;width:100%!important;gap:5px!important;align-content:start!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel .r54-skill{min-height:0!important;height:79px!important;width:100%!important;padding:4px 2px!important;gap:1px!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #rf-inspect-dock{top:50px!important;bottom:4px!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #rf-inspect-dock #upgrade-ui{padding:7px!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #boss-hud.show{position:absolute!important;top:50px;left:8px;width:min(660px,calc(100% - 16px))!important;max-width:calc(100% - 16px)!important;z-index:7!important;}
+}
+/* Phone and short landscape: the 7 towers move below the map; right dock is
+   always split into wave control, all 5 skills, and a scrollable inspector. */
+@media (orientation:landscape) and (max-height:600px) and (max-width:1100px){
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]){--r56-right:clamp(155px,30vw,208px)!important;--r56-header:35px!important;grid-template-columns:minmax(0,1fr) var(--r56-right)!important;grid-template-rows:minmax(0,1fr)!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper{grid-column:1!important;grid-row:1!important;grid-template-rows:35px minmax(0,1fr) 57px!important;gap:2px!important;padding:1px 3px 2px!important;width:100%!important;min-width:0!important;height:100%!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-header{grid-row:1!important;height:35px!important;min-height:35px!important;max-height:35px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #hud{grid-template-columns:repeat(2,minmax(43px,1fr)) minmax(50px,.9fr)!important;gap:3px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #hud .stat{height:32px!important;min-height:32px!important;padding:2px 3px!important;gap:3px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #hud .stat-icon{width:15px!important;min-width:15px!important;height:15px!important;outline:0!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #hud .hud-value{font-size:12px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #hud .hud-label{font-size:8px!important;letter-spacing:.01em!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #hud #tower-cap-container,html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #hud .hud-world-copy{display:none!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #hud #hud-wave-stat{grid-column:auto!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #canvas-shell{grid-column:1!important;grid-row:2!important;width:100%!important;height:100%!important;min-height:0!important;align-items:center!important;justify-content:flex-start!important;padding:0!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail{display:block!important;position:fixed!important;left:3px!important;right:calc(var(--r56-right) + 3px)!important;bottom:2px!important;height:54px!important;width:auto!important;z-index:76!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;grid-template-rows:1fr!important;width:100%!important;height:100%!important;padding:2px!important;gap:2px!important;max-width:none!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail .tower-btn{padding:1px!important;gap:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;min-width:0!important;justify-content:center!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail .tower-icon-wrapper{height:20px!important;max-height:20px!important;min-height:0!important;flex:0 0 20px!important;width:100%!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail .tower-name,html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail .tower-cost{font-size:9px!important;line-height:1.03!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel{grid-column:2!important;grid-row:1!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:3px!important;width:100%!important;height:100%!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;padding:3px!important;scrollbar-width:thin;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r84-spell-heading{display:flex!important;flex:0 0 17px!important;height:17px!important;min-height:17px!important;padding:0 2px!important;font-size:9px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-spell-heading img{height:14px!important;width:14px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-spell-heading span{font-size:8px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r52-wave-summary,html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #wave-prep.show{order:0!important;flex:0 0 38px!important;height:38px!important;min-height:38px!important;max-height:38px!important;position:relative!important;grid-row:auto!important;grid-column:auto!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #wave-prep:not(.show){display:none!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel{order:1!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(2,48px)!important;gap:2px!important;min-height:99px!important;max-height:none!important;height:99px!important;flex:0 0 99px!important;width:100%!important;max-width:100%!important;padding:2px!important;overflow:hidden!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel::before{display:none!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel .r54-skill{display:grid!important;grid-template-columns:1fr!important;grid-template-rows:21px 11px 10px!important;width:100%!important;height:48px!important;min-width:0!important;min-height:0!important;padding:1px!important;gap:0!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel .skill-icon{grid-column:1!important;grid-row:1!important;align-self:center!important;justify-self:center!important;font-size:16px!important;min-height:0!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel .skill-name{grid-column:1!important;grid-row:2!important;font-size:8px!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel .skill-cooldown{grid-column:1!important;grid-row:3!important;font-size:8px!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel .r54-skill::before{width:27px;height:27px;left:calc(50% - 13.5px)!important;top:1px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve{order:2!important;display:flex!important;flex:1 0 105px!important;min-height:105px!important;position:relative;flex-direction:column;overflow:hidden;background:linear-gradient(150deg,#1d3031,#0a1d28);border:1px solid #9c855e;border-radius:6px;box-shadow:inset 0 1px #eed1a43d;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:102px;height:100%;text-align:center;padding:7px;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle img{width:24px;height:24px;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle strong{font-size:9px;letter-spacing:.05em;color:#f4dcae;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle span{font-size:9px;line-height:1.15;color:#acc9c7;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]).rf-upgrade #r84-inspect-idle{display:none!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui{position:relative!important;display:none!important;flex-direction:column!important;inset:auto!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;transform:none!important;width:100%!important;height:100%!important;min-height:0!important;max-height:100%!important;max-width:100%!important;padding:3px!important;margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important;gap:2px!important;overflow-y:auto!important;overflow-x:hidden!important;pointer-events:auto!important;opacity:1!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]).rf-upgrade #r84-inspect-reserve #upgrade-ui.show{display:flex!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-header{position:relative!important;top:auto!important;flex:0 0 26px!important;height:26px!important;min-height:26px!important;margin:0!important;padding:0!important;gap:2px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .r62-portrait-frame{display:none!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-kicker,html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-role,html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui #upgrade-prep-rail{display:none!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui #upg-title{font-size:11px!important;line-height:1!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-header .btn-close{min-height:23px!important;height:23px!important;width:26px!important;min-width:26px!important;padding:0!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .r54-branch-tabs{display:grid!important;grid-template-columns:1fr 1fr!important;flex:0 0 24px!important;height:24px!important;min-height:24px!important;gap:3px!important;margin:0!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .r54-branch-tabs button{min-height:24px!important;height:24px!important;padding:1px!important;font-size:10px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-paths{flex:0 0 auto!important;display:flex!important;flex-direction:column!important;min-height:0!important;gap:2px!important;overflow:visible!important;margin:0!important;padding:0!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve[data-r54-branch="1"] #upgrade-ui #path-2-container,html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve[data-r54-branch="2"] #upgrade-ui #path-1-container{display:none!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-path{display:flex!important;flex-direction:column!important;flex:0 0 auto!important;max-height:none!important;height:auto!important;min-height:0!important;overflow:visible!important;padding:2px!important;gap:1px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-path h4{font-size:10px!important;min-height:0!important;height:auto!important;line-height:1!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-desc,html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-next-name,html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-branch-role,html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-next-desc{display:none!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .btn-upgrade{font-size:10px!important;min-height:29px!important;height:29px!important;max-height:29px!important;flex:0 0 29px!important;padding:3px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .btn-sell{font-size:10px!important;min-height:27px!important;height:27px!important;max-height:27px!important;flex:0 0 27px!important;padding:3px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r56-mobile-upgrade-layer{pointer-events:none!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #boss-hud.show{width:100%!important;flex:0 0 42px!important;max-height:42px!important;overflow:hidden!important;}
+}
+@media (orientation:landscape) and (max-height:345px) and (max-width:700px){
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail{height:48px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper{grid-template-rows:33px minmax(0,1fr) 51px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel{height:87px!important;min-height:87px!important;flex-basis:87px!important;grid-template-rows:repeat(2,42px)!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel .r54-skill{height:42px!important;grid-template-rows:17px 10px 9px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r52-wave-summary,html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #wave-prep.show{flex-basis:34px!important;min-height:34px!important;height:34px!important;max-height:34px!important;}
+}
+@media (prefers-reduced-motion:reduce){body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill,body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail .tower-btn{transition:none!important;}}
+/* Legacy R56 disabled hit testing on the formerly unused mobile rail. */
+@media (orientation:landscape) and (max-height:600px) and (max-width:1100px){
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail,
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons,
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons .tower-btn{pointer-events:auto!important;}
+}
+/* R56 had a more-specific .rf-upgrade layout that silently removed the reserved
+   tower row when selecting a built tower. Preserve identical canvas dimensions. */
+@media (orientation:landscape) and (max-height:600px) and (max-width:1100px){
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]).rf-upgrade{--r56-right:clamp(155px,30vw,208px)!important;grid-template-columns:minmax(0,1fr) var(--r56-right)!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]).rf-upgrade #game-wrapper{grid-template-rows:35px minmax(0,1fr) 57px!important;grid-template-columns:minmax(0,1fr)!important;gap:2px!important;padding:1px 3px 2px!important;height:100%!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]).rf-upgrade #game-wrapper #canvas-shell{grid-column:1!important;grid-row:2!important;width:100%!important;height:100%!important;min-height:0!important;padding:0!important;justify-content:flex-start!important;align-items:center!important;}
+}
+@media (orientation:landscape) and (max-height:345px) and (max-width:700px){
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]).rf-upgrade #game-wrapper{grid-template-rows:33px minmax(0,1fr) 51px!important;}
+}
+/* Hidden is a functional attribute, not merely visual decoration. */
+body:is([data-scene="play"],[data-scene="pause"]) #r54-inspect-idle[hidden]{display:none!important;}
+/* 568x320 narrow landscape: keep Build / Upgrade / Sell fully reachable
+   without requiring the user to scroll the right-hand inspector. */
+@media (orientation:landscape) and (max-height:345px) and (max-width:700px){
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-header{flex:0 0 22px!important;height:22px!important;min-height:22px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .r54-branch-tabs{flex:0 0 21px!important;height:21px!important;min-height:21px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .r54-branch-tabs button{height:21px!important;min-height:21px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .upg-path{gap:0!important;padding:1px 2px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .btn-upgrade{flex:0 0 25px!important;height:25px!important;min-height:25px!important;max-height:25px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui .btn-sell{flex:0 0 25px!important;height:25px!important;min-height:25px!important;max-height:25px!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui #r49-upgrade-info{display:none!important;}
+}
+
+/* R91.7.2: the obsolete R54 inspector occupies the same mobile grid cell as
+   the R84 unified spell/upgrade dock. It must not paint over the controls. */
+@media (orientation:landscape) and (max-height:600px) and (max-width:1100px){
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #rf-inspect-dock,
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]).rf-upgrade #rf-inspect-dock{display:none!important;visibility:hidden!important;pointer-events:none!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #r58-details-toggle{
+  display:block!important;flex:0 0 24px!important;width:100%!important;height:24px!important;
+  min-height:24px!important;padding:2px 3px!important;margin:0!important;
+  border:1px solid #819f9b!important;border-radius:5px!important;
+  background:linear-gradient(#2c5155,#18343f)!important;color:#f0e4c5!important;
+  font-size:10px!important;font-weight:750!important;touch-action:manipulation;
+ }
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #r58-details-panel{
+  display:none!important;position:absolute!important;z-index:8!important;
+  top:23px!important;bottom:2px!important;left:2px!important;right:2px!important;
+  padding:7px!important;flex-direction:column!important;gap:5px!important;
+  overflow-y:auto!important;overscroll-behavior:contain;
+  background:#102b39!important;color:#e2ede7!important;
+  border:1px solid #9e9271!important;border-radius:6px!important;box-shadow:0 5px 15px #000b!important;
+ }
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui.r58-details #r58-details-panel{display:flex!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #r58-details-heading{font-size:12px!important;line-height:1.2!important;color:#f4d8a4!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #r58-details-copy{font-size:11px!important;line-height:1.3!important;white-space:normal!important;overflow-wrap:anywhere!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #r58-details-close{
+  display:block!important;flex:0 0 27px!important;min-height:27px!important;height:27px!important;
+  padding:2px 5px!important;font-size:10px!important;font-weight:800!important;
+  color:#f8e7c6!important;background:#31515d!important;border:1px solid #8aaba6!important;
+  border-radius:5px!important;touch-action:manipulation;
+ }
+}
+@media (orientation:landscape) and (max-height:345px) and (max-width:700px){
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #r58-details-toggle{flex-basis:21px!important;height:21px!important;min-height:21px!important;font-size:9px!important;}
+}
+/* Royal Bastion tutorial uses matching vector art rather than platform emoji. */
+#screen-tutorial #tutorial-icon img{display:block;width:44px;height:44px;max-width:100%;object-fit:contain;margin:auto;filter:drop-shadow(0 3px 7px #0008);}
+@media (max-height:450px){#screen-tutorial #tutorial-icon img{width:32px;height:32px;}}
+
+/* R91.7.3: mobile-only details never leak into desktop/portrait inspector.
+   Keep Back to Purchase visible while descriptions scroll independently. */
+#upgrade-ui #r58-details-toggle,#upgrade-ui #r58-details-panel{display:none!important;}
+@media (orientation:landscape) and (max-height:600px) and (max-width:1100px){
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #r58-details-panel{overflow:hidden!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #r58-details-heading{flex:0 0 auto!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #r58-details-copy{
+  flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain;scrollbar-width:thin;
+ }
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #r58-details-close{flex:0 0 27px!important;margin-top:auto!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui #r58-details-toggle:focus-visible,
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #r58-details-close:focus-visible{
+  outline:2px solid #ffe5a3!important;outline-offset:-2px!important;
+ }
+}
+
+/* R91.7.5: responsive right-hand spell dock on standard PC screens.
+   All five active spells occupy five rows, not a fixed 2x3 grid with an empty
+   sixth cell and large unused space below. No canvas geometry is changed.
+   The rules intentionally exclude short/landscape touch layouts: they have a
+   separate three-column layout and reserved upgrade inspector. */
+@media (min-width:900px) and (min-height:601px){
+ body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel{display:flex!important;flex-direction:column!important;align-items:stretch!important;min-height:0!important;}
+ body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel{
+  display:grid!important;flex:1 1 0!important;min-height:0!important;height:auto!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:repeat(5,minmax(0,1fr))!important;
+  align-content:stretch!important;justify-content:stretch!important;
+  gap:clamp(4px,.9vh,9px)!important;
+ }
+ body:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel .r54-skill{
+  box-sizing:border-box!important;display:flex!important;flex-direction:column!important;
+  flex:1 1 auto!important;min-height:0!important;height:100%!important;
+  width:100%!important;align-items:center!important;justify-content:center!important;
+  padding:clamp(3px,.8vh,9px) 4px!important;gap:clamp(2px,.4vh,6px)!important;
+ }
+ body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill .skill-icon{
+  min-height:clamp(27px,3.7vh,50px)!important;
+  max-height:clamp(27px,3.7vh,50px)!important;
+ }
+ body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill .r62-rune-art{
+  width:clamp(26px,3.7vh,48px)!important;
+  height:clamp(26px,3.7vh,48px)!important;
+ }
+ body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill .skill-name{
+  font-size:clamp(11px,1.35vh,16px)!important;line-height:1.14!important;
+  text-align:center!important;overflow-wrap:normal!important;
+ }
+ body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill .skill-cooldown{
+  font-size:clamp(11px,1.35vh,16px)!important;text-align:center!important;
+ }
+ body:is([data-scene="play"],[data-scene="pause"]) #skills-panel .r54-skill::before{
+  width:clamp(34px,4.4vh,56px)!important;height:clamp(34px,4.4vh,56px)!important;
+  top:clamp(4px,.9vh,12px)!important;
+  left:calc(50% - clamp(17px,2.2vh,28px))!important;
+ }
+ body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail .tower-icon-wrapper{
+  height:clamp(31px,4.4vh,39px)!important;
+  max-height:clamp(31px,4.4vh,39px)!important;
+  flex-basis:clamp(31px,4.4vh,39px)!important;
+ }
+ body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail .tower-name,
+ body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail .tower-cost{
+  font-size:clamp(11px,1.4vh,14px)!important;
+ }
+}
+
+/* R91.7.6: meaningful idle inspector while preserving the permanent inspector
+   reservation. Reuse bundled royal heraldry, no new third-party artwork. */
+body:is([data-scene="play"],[data-scene="pause"]) #r54-inspect-idle.r9176-idle-inspector{
+ position:relative!important;display:flex!important;flex-direction:column!important;
+ justify-content:space-evenly!important;align-items:center!important;
+ gap:clamp(8px,1.7vh,19px)!important;padding:clamp(12px,2vw,21px)!important;
+ background:radial-gradient(ellipse at 50% 28%,#987b3733,transparent 48%),
+  linear-gradient(180deg,#2a3b3d8a,#0c1c27c0)!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-inspect-idle[hidden]{display:none!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-inspect-idle .r9176-idle-crest{
+ width:clamp(65px,9vh,108px)!important;height:clamp(75px,12vh,132px)!important;
+ max-width:80%!important;opacity:.95!important;object-fit:contain!important;
+ filter:drop-shadow(0 3px 12px #02070cb8)!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) .r9176-idle-inspector strong{
+ font-family:Georgia,serif;max-width:100%;font-size:clamp(13px,1.2vw,18px)!important;
+ line-height:1.3!important;color:#f1d79e!important;text-align:center!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-inspect-idle .r9176-idle-intro{
+ font-size:clamp(12px,1vw,14px)!important;line-height:1.45!important;color:#c2d6d1!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) .r9176-idle-steps{
+ display:grid;gap:clamp(6px,1vh,13px);width:100%;max-width:280px;
+}
+body:is([data-scene="play"],[data-scene="pause"]) .r9176-idle-steps>div{
+ display:flex;align-items:center;gap:9px;min-height:47px;padding:8px 9px;
+ background:linear-gradient(90deg,#67533150,#14262dc9);border:1px solid #b99c604b;
+ border-radius:5px;text-align:left;box-sizing:border-box;
+}
+body:is([data-scene="play"],[data-scene="pause"]) .r9176-idle-steps b{
+ font:800 17px/1 Georgia,serif;color:#efc886;min-width:27px;text-shadow:0 2px 5px #000a;
+}
+body:is([data-scene="play"],[data-scene="pause"]) .r9176-idle-steps span{font-size:12px!important;line-height:1.34!important;color:#d9e0cf!important;}
+body:is([data-scene="play"],[data-scene="pause"]) #r54-inspect-idle .r9176-idle-compact-note{display:none!important;}
+@media (orientation:landscape) and (max-height:600px) and (max-width:1100px){
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle.r9176-idle-inspector{
+  display:flex!important;flex-direction:column!important;align-items:center!important;
+  justify-content:space-evenly!important;gap:2px!important;
+  padding:6px 7px!important;background:radial-gradient(ellipse at 50% 25%,#99713830,transparent 65%);
+ }
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle .r9176-idle-crest{
+  width:clamp(32px,6vh,49px)!important;height:clamp(35px,7vh,54px)!important;
+  object-fit:contain!important;filter:drop-shadow(0 3px 8px #000b);
+ }
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle strong{font-size:10px!important;line-height:1.2!important;letter-spacing:.04em!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle .r9176-idle-intro{font-size:9px!important;line-height:1.3!important;color:#c2d6d1!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle .r9176-idle-steps{display:none!important;}
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle .r9176-idle-compact-note{
+  display:block!important;border-top:1px solid #b59b6259;width:100%;padding-top:4px;
+  font-size:9px!important;line-height:1.2!important;color:#dbccae!important;text-align:center;
+ }
+}
+/* In short landscape tutorial, restore actual thematic icon instead of a blank
+   top region, while text and two large buttons remain reachable. */
+@media (orientation:landscape) and (max-height:450px){
+ #screen-tutorial .tutorial-card{
+  display:grid!important;grid-template-columns:54px minmax(0,1fr)!important;
+  grid-template-rows:auto auto auto auto auto!important;align-items:center!important;
+  gap:3px 8px!important;padding:10px 12px!important;width:min(740px,calc(100vw - 14px))!important;
+  max-height:calc(100dvh - 14px)!important;overflow-y:auto!important;
+ }
+ #screen-tutorial .tutorial-icon{
+  grid-column:1!important;grid-row:1/3!important;display:flex!important;
+  margin:0!important;align-items:center!important;justify-content:center!important;
+  height:46px!important;min-height:0!important;
+ }
+ #screen-tutorial .tutorial-icon img{width:40px!important;height:40px!important;}
+ #screen-tutorial .tutorial-step-label{grid-column:2!important;grid-row:1!important;text-align:left!important;}
+ #screen-tutorial #tutorial-title{grid-column:2!important;grid-row:2!important;text-align:left!important;margin:0!important;}
+ #screen-tutorial #tutorial-text{grid-column:1/-1!important;grid-row:3!important;}
+ #screen-tutorial #tutorial-hint{grid-column:1/-1!important;grid-row:4!important;}
+ #screen-tutorial .screen-actions{grid-column:1/-1!important;grid-row:5!important;margin-top:4px!important;}
+}
+@media (orientation:landscape) and (max-height:350px) and (max-width:700px){
+ #screen-tutorial .tutorial-card{grid-template-columns:44px minmax(0,1fr)!important;padding:7px 9px!important;gap:1px 6px!important;}
+ #screen-tutorial .tutorial-icon{height:38px!important;}
+ #screen-tutorial .tutorial-icon img{width:35px!important;height:35px!important;}
+}
+/* Selected-tower view must replace, never overlap, the compact idle artwork. */
+@media (orientation:landscape) and (max-height:600px) and (max-width:1100px){
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]).rf-upgrade #r84-inspect-idle.r9176-idle-inspector{display:none!important;}
+}
+/* R91.7.6: 568x320 real Chromium check exposed an 18px hidden Sell button.
+   Restore a two-row 41px spell grid and transfer reclaimed height to the
+   inspector. Keep every spell tap target at least 40px, do not move the map. */
+@media (orientation:landscape) and (max-height:345px) and (max-width:700px){
+ html.device-touch body[data-ui-skin="royal-bastion"][data-scene="play"] #bottom-panel #skills-panel{
+  height:90px!important;min-height:90px!important;max-height:90px!important;
+  flex:0 0 90px!important;flex-basis:90px!important;
+  grid-template-rows:repeat(2,41px)!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  padding:2px!important;gap:2px!important;box-sizing:border-box!important;
+ }
+ html.device-touch body[data-ui-skin="royal-bastion"][data-scene="play"] #bottom-panel #skills-panel .r54-skill{
+  height:41px!important;min-height:41px!important;max-height:41px!important;
+  grid-template-rows:17px 10px 9px!important;padding:1px!important;
+ }
+ html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve #upgrade-ui{gap:1px!important;}
+}
+
+/* R91.7.6: only genuine 5:3 letterboxing >118px gets a tactical briefing.
+   Absolute overlay is placed by measured canvas bounds, and never touches the
+   logical canvas, tower rails, touch targets or gameplay coordinates. */
+#r9176-field-report[hidden]{display:none!important;}
+#r9176-field-report{
+ position:absolute!important;z-index:2!important;pointer-events:none!important;
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:space-evenly!important;gap:3px!important;
+ padding:8px 7px!important;overflow:hidden!important;box-sizing:border-box!important;
+ background:radial-gradient(ellipse at 50% 30%,#a784372b,transparent 57%),
+ linear-gradient(165deg,#2b3835ed,#091923f5)!important;
+ border:1px solid #a9956b!important;border-radius:6px!important;
+ box-shadow:inset 0 1px #f1d2a931,0 5px 18px #0008!important;
+ color:#eee2bd!important;text-align:center!important;
+}
+#r9176-field-report .r9176-field-heading{font:700 11px/1.2 Georgia,serif;color:#f3d79d;letter-spacing:.09em;}
+#r9176-field-report .r9176-field-crest{width:36px;height:45px;max-width:100%;object-fit:contain;filter:drop-shadow(0 2px 6px #0009);}
+#r9176-field-report .r9176-field-roster-label{width:100%;font:700 9px/1.2 sans-serif;color:#c2a873;border-top:1px solid #a9956b52;padding-top:4px;}
+#r9176-field-report p{font:500 10px/1.25 sans-serif;color:#d2e1d5;margin:0;max-width:100%;max-height:68px;overflow:hidden;overflow-wrap:anywhere;}

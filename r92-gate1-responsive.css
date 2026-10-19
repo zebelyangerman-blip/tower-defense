@@ -1,0 +1,144 @@
+/* Gate 1 / R91.7.18: spatial composition for large desktop screens.
+   Only layout/presentation; world canvas stays exactly 5:3, inspector is always reserved. */
+@media (min-width: 1700px) and (min-height: 850px) {
+  html:not(.device-touch) body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper {
+    grid-template-rows: 43px minmax(0, 1fr) 134px !important;
+  }
+  html:not(.device-touch) body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #r49-wave-state {
+    display: none !important; /* formerly invisible behind tower strip */
+  }
+  html:not(.device-touch) body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #wave-prep {
+    grid-row: 3 !important;
+    height: 80px !important;
+    min-height: 80px !important;
+    max-height: 80px !important;
+    align-self: end !important;
+    margin: 0 !important;
+    padding: 5px 10px !important;
+    gap: 2px 9px !important;
+    grid-template-rows: 17px 31px 20px !important;
+  }
+  html:not(.device-touch) body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #wave-prep .wave-prep-title {
+    max-height: 19px !important;
+    font-size: 13px !important;
+  }
+  html:not(.device-touch) body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #wave-prep .wave-prep-roster {
+    gap: 2px 4px !important;
+    overflow: hidden !important;
+  }
+  html:not(.device-touch) body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #wave-prep .wave-prep-objective {
+    font-size: 11px !important;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-height: 20px !important;
+  }
+  html:not(.device-touch) body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #wave-prep .wave-prep-btn {
+    height: 45px !important;
+    min-height: 45px !important;
+    max-height: 45px !important;
+  }
+  html:not(.device-touch) body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #boss-hud {
+    grid-row: 3 !important;
+    height: 80px !important;
+    min-height: 80px !important;
+    max-height: 80px !important;
+  }
+  html:not(.device-touch) body:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail {
+    height: 54px !important;
+    bottom: 84px !important;
+  }
+  html:not(.device-touch) body #screen-menu .menu-shell {
+    width: min(1710px, 100%) !important;
+    max-width: 1710px !important;
+    grid-template-columns: minmax(0, .93fr) minmax(0, 1.17fr) !important;
+  }
+  html:not(.device-touch) body #screen-menu .menu-hero,
+  html:not(.device-touch) body #screen-menu .menu-campaign-shell {
+    padding-inline: clamp(22px, 1.7vw, 34px);
+  }
+  html:not(.device-touch) body #screen-meta .meta-shell {
+    width: min(1690px, 100%) !important;
+    max-width: 1690px !important;
+    grid-template-columns: clamp(205px, 14vw, 250px) minmax(0, 1fr) !important;
+  }
+}
+
+/* Gate 1 continuing / ultrawide 3K+ screens. Do NOT scale the 5:3 world to fill
+   horizontal letterboxing. The existing read-only scouting panel occupies only
+   space measured to the right of the actual gameCanvas. */
+@media (min-width:3000px) and (min-height:1000px) {
+ html:not(.device-touch) body:is([data-scene="play"],[data-scene="pause"]) {
+  --r54-controls:270px!important;
+  --r54-inspector:340px!important;
+ }
+ html:not(.device-touch) body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper {
+  grid-template-rows:60px minmax(0,1fr) 134px!important;
+ }
+ html:not(.device-touch) body #game-wrapper #hud .hud-label {
+  font-size:15px!important;
+ }
+ html:not(.device-touch) body #game-wrapper #hud .hud-value,
+ html:not(.device-touch) body #game-wrapper #hud #ui-wave {
+  font-size:20px!important;
+ }
+ html:not(.device-touch) body #game-wrapper #battle-speed,
+ html:not(.device-touch) body #game-wrapper #pause-btn {
+  min-height:48px!important;height:48px!important;min-width:48px!important;width:48px!important;
+ }
+ html:not(.device-touch) body #bottom-panel #skills-panel {
+  grid-template-columns:1fr!important;
+  grid-template-rows:repeat(5,minmax(0,1fr))!important;
+  height:calc(100% - 52px)!important;
+  max-height:none!important;
+ }
+ html:not(.device-touch) body #bottom-panel #skills-panel .r54-skill {
+  min-height:0!important;height:auto!important;overflow:hidden!important;
+ }
+ html:not(.device-touch) body #bottom-panel #skills-panel .skill-name {
+  font-size:14px!important;
+ }
+ html:not(.device-touch) body #bottom-panel #skills-panel .skill-icon {
+  font-size:25px!important;
+ }
+ html:not(.device-touch) body #rf-inspect-dock .r9176-idle-crest {
+  width:min(120px,60%)!important;height:140px!important;
+ }
+ html:not(.device-touch) body #rf-inspect-dock .r9176-idle-inspector {
+  font-size:17px!important;
+ }
+ html:not(.device-touch) body #r9176-field-report[data-mode="wide"] {
+  padding:clamp(22px,3.2vw,62px)!important;
+  gap:24px!important;
+  background:
+   radial-gradient(ellipse at 55% 28%,#d1a66727,transparent 49%),
+   radial-gradient(ellipse at 35% 85%,#6199a51a,transparent 60%),
+   linear-gradient(145deg,#1c3239fa,#081721fc)!important;
+  border:2px solid #ad9665!important;
+  border-radius:13px!important;
+  box-shadow:inset 0 0 0 4px #091b27a9,0 5px 25px #0009!important;
+ }
+ html:not(.device-touch) body #r9176-field-report[data-mode="wide"] .r9176-field-heading {
+  font-size:clamp(22px,1.2vw,32px)!important;letter-spacing:.14em!important;
+ }
+ html:not(.device-touch) body #r9176-field-report[data-mode="wide"] .r9176-field-crest {
+  width:clamp(90px,8vw,180px)!important;height:clamp(125px,11vw,225px)!important;
+ }
+ html:not(.device-touch) body #r9176-field-report[data-mode="wide"] .r9176-field-roster-label {
+  font-size:clamp(15px,.8vw,22px)!important;padding-top:18px!important;
+ }
+ html:not(.device-touch) body #r9176-field-report[data-mode="wide"] p {
+  font-size:clamp(16px,.9vw,25px)!important;line-height:1.45!important;
+  max-height:none!important;
+ }
+}
+
+/* R91.7.20 / Gate 3: legacy inspector state spanned the header over two grid
+   tracks despite R54 reserving one single battle column. CSS Grid therefore
+   created an empty implicit track plus a 4px gap and resized the 5:3 canvas.
+   Keep the actual battle regions in the reserved first track, regardless of
+   whether the upgrade inspector is open. No gameplay geometry is modified. */
+@media (min-width:900px) and (min-height:601px) {
+  html:not(.device-touch) body:is([data-scene="play"],[data-scene="pause"]).rf-upgrade #game-wrapper :is(.battle-header, #canvas-shell, #wave-prep, #boss-hud, #r49-wave-state) {
+    grid-column:1!important;
+  }
+}
