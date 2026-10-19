@@ -1,0 +1,239 @@
+/* Tower Defense: Reforged — R94.2 / Command HUD.
+   Scope: only the EXISTING battle header and its five statistics + two actions.
+   Unhide the tower capacity and campaign indicators without adding a layout row,
+   resizing the battlefield, modifying simulation, or touching side/bottom docks.
+   The same dimensions apply during play, pause, tower selection and upgrades. */
+
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-header {
+  display:flex!important;
+  align-items:stretch!important;
+  justify-content:stretch!important;
+  gap:clamp(2px,.3vw,5px)!important;
+  padding:0!important;
+  min-width:0!important;
+  overflow:hidden!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud {
+  display:grid!important;
+  flex:1 1 0%!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  height:100%!important;
+  min-height:0!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,.88fr) minmax(0,1.85fr) minmax(0,1.12fr)!important;
+  grid-template-rows:minmax(0,1fr)!important;
+  align-items:stretch!important;
+  gap:clamp(2px,.3vw,5px)!important;
+  overflow:hidden!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .stat,
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #tower-cap-container,
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-world-copy {
+  display:flex!important;
+  grid-row:1!important;
+  grid-column:auto!important;
+  box-sizing:border-box!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  position:relative!important;
+  min-width:0!important;
+  max-width:none!important;
+  min-height:0!important;
+  height:100%!important;
+  margin:0!important;
+  padding:3px clamp(4px,.52vw,11px)!important;
+  gap:clamp(3px,.38vw,8px)!important;
+  overflow:hidden!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .stat>div {
+  min-width:0!important;
+  max-width:100%!important;
+  width:auto!important;
+  flex:1 1 auto!important;
+  overflow:hidden!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-label {
+  display:block!important;
+  margin:0 0 1px!important;
+  font-size:clamp(8px,.7vw,11px)!important;
+  line-height:1.05!important;
+  letter-spacing:.045em!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-value,
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #hud-wave-stat .hud-value,
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #hud-wave-stat #ui-wave {
+  display:block!important;
+  font-size:clamp(12px,.95vw,17px)!important;
+  line-height:1.12!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  min-width:0!important;
+  margin:0!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .stat-icon.r49-icon {
+  display:block!important;
+  width:clamp(17px,1.55vw,25px)!important;
+  height:clamp(17px,1.55vw,25px)!important;
+  min-width:clamp(17px,1.55vw,25px)!important;
+  flex:0 0 clamp(17px,1.55vw,25px)!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-world-copy {
+  padding-left:clamp(5px,.52vw,11px)!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-world-copy .hud-value {
+  font-size:clamp(11px,.88vw,15px)!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-world-copy #ui-world-name {
+  display:block!important;
+  font-size:clamp(8px,.6vw,10px)!important;
+  line-height:1.1!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin-top:1px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #hud-wave-stat .hud-wave-meter {
+  display:none!important; /* redundant at 43px; the numerical wave is always visible */
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions {
+  display:flex!important;
+  align-items:stretch!important;
+  flex-direction:row!important;
+  flex:0 0 auto!important;
+  gap:clamp(2px,.3vw,5px)!important;
+  min-width:0!important;
+  height:100%!important;
+  margin:0!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions #battle-speed,
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions #pause-btn {
+  display:flex!important;
+  position:relative!important;
+  justify-content:center!important;
+  align-items:center!important;
+  box-sizing:border-box!important;
+  flex:0 0 clamp(34px,3.2vw,46px)!important;
+  width:clamp(34px,3.2vw,46px)!important;
+  min-width:0!important;
+  min-height:0!important;
+  height:100%!important;
+  max-height:100%!important;
+  padding:0!important;
+  margin:0!important;
+}
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions #pause-btn img {
+  display:block!important;
+  width:clamp(17px,1.6vw,22px)!important;
+  height:clamp(17px,1.6vw,22px)!important;
+  object-fit:contain!important;
+}
+
+/* The canvas is sized from the existing container tracks, not from the HUD.
+   Do not expand the top row at any landscape breakpoint. */
+@media (orientation:landscape) and (max-width:1100px) {
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud {
+    grid-template-columns:minmax(0,.9fr) minmax(0,.9fr) minmax(0,.83fr) minmax(0,1.55fr) minmax(0,1.06fr)!important;
+    gap:2px!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .stat,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #tower-cap-container,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-world-copy {
+    display:flex!important;
+    min-height:0!important;
+    height:100%!important;
+    padding:2px 3px!important;
+    gap:3px!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .stat-icon.r49-icon {
+    display:none!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-label {
+    display:block!important;
+    font-size:8px!important;
+    letter-spacing:0!important;
+    line-height:1.1!important;
+    margin:0 0 2px!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-value,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #hud-wave-stat .hud-value,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #hud-wave-stat #ui-wave,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-world-copy .hud-value {
+    font-size:11px!important;
+    line-height:1.1!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-world-copy #ui-world-name {
+    display:none!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions #battle-speed,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions #pause-btn {
+    flex-basis:34px!important;
+    width:34px!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:100%!important;
+  }
+}
+@media (orientation:landscape) and (max-width:700px) and (max-height:345px) {
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud {
+    grid-template-columns:minmax(0,.82fr) minmax(0,.82fr) minmax(0,.76fr) minmax(0,1.7fr) minmax(0,.88fr)!important;
+    gap:2px!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .stat,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #tower-cap-container,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-world-copy {
+    padding:1px 2px!important;
+    gap:1px!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-label {
+    font-size:7px!important;
+    margin:0 0 2px!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-value,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #hud-wave-stat .hud-value,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #hud-wave-stat #ui-wave,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-world-copy .hud-value {
+    font-size:9px!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions #battle-speed,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions #pause-btn {
+    flex-basis:30px!important;
+    width:30px!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions #pause-btn img {
+    width:17px!important;height:17px!important;
+  }
+}
+/* The wave's live number is an inline part of "Волна 2/8", not a separate row.
+   The base selectors above also match #ui-wave; this final higher-specificity
+   rule intentionally restores its inline semantics at every breakpoint. */
+html body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #hud-wave-stat #ui-wave,
+html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #hud-wave-stat #ui-wave {
+  display:inline!important;
+  font-size:inherit!important;
+  line-height:inherit!important;
+  overflow:visible!important;
+  white-space:inherit!important;
+  text-overflow:clip!important;
+}
+
+/* On landscape touch, the header already says «Атака», so the numerical
+   wave can stand alone. This prevents ellipsis even for late waves 25/25. */
+@media (orientation:landscape) and (max-width:1100px) {
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud #hud-wave-stat .r94-wave-prefix {
+    display:none!important;
+  }
+}
+/* pauseGame()/tutorial explicitly hide the pause command. Keep its reserved
+   geometry so other HUD values do not jump, but never leave an active ghost
+   button behind the pause/tutorial overlay. */
+body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions #pause-btn[style*="display: none"] {
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
