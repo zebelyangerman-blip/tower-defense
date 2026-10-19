@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
-<g fill="none" stroke="#9ee0d3" stroke-opacity=".19" stroke-width="1">
- <path d="M0 0l96 96L192 0M0 192l96-96 96 96M0 96h192M96 0v192"/>
- <path d="M96 14l82 82-82 82-82-82zM96 33l63 63-63 63-63-63z"/>
- <circle cx="96" cy="96" r="34"/><circle cx="96" cy="96" r="44" stroke-dasharray="2 7"/>
-</g><g stroke="#d7d6ac" stroke-opacity=".22" fill="none"><path d="M96 60v72M60 96h72"/></g>
-</svg>
