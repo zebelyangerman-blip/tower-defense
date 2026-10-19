@@ -1,0 +1,200 @@
+/* R80 / Renaissance: campaign artwork + 18-world atlas, UI-only. */
+:root{--r80-ink:#07131b;--r80-ink2:#102430;--r80-gold:#edcd90;--r80-border:#90744f;--r80-silver:#b9ccd2}
+#screen-menu .menu-campaign-shell{gap:7px!important}
+#screen-menu .r80-campaign-toolbar{display:flex;align-items:center;gap:8px;flex:0 0 auto;min-width:0;max-height:36px}
+#screen-menu .r80-campaign-toolbar button{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:0;min-height:35px;flex:1;padding:5px 8px;border:1px solid #987e55;border-radius:4px;background:linear-gradient(180deg,#26393e,#10222a);box-shadow:inset 0 1px #f4d39637,0 3px 10px #0008;color:#f0dfb9;font:700 clamp(10px,.76vw,12px)/1.2 system-ui,sans-serif;letter-spacing:.035em;text-shadow:0 1px #000;cursor:pointer;white-space:nowrap}
+#screen-menu .r80-campaign-toolbar button:first-child{background:linear-gradient(180deg,#6d5131,#322919);border-color:#d0a763;color:#fff2d2}
+#screen-menu .r80-campaign-toolbar img{height:18px;width:18px;object-fit:contain;flex:none;filter:drop-shadow(0 1px 2px #0008)}
+#screen-menu .r80-frontline span{padding:3px 5px;border:1px solid #8b7549;border-radius:3px;color:#ffd98f;font-weight:900}
+#screen-menu #campaign-page-nav{display:flex!important;flex:0 0 auto;min-height:41px;padding:0;gap:6px}
+#screen-menu .campaign-page-tabs{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;min-width:0;flex:1;overflow:visible}
+#screen-menu .campaign-page-tab{min-width:0;min-height:41px;padding:5px 2px;font-size:clamp(10px,.68vw,12px)!important;background:linear-gradient(#19303c,#0c202b);border:1px solid #52707a;color:#d5e0e0;letter-spacing:0;border-radius:3px}
+#screen-menu .campaign-page-tab>small{font-size:9px!important;line-height:1.2;color:#c0a878;white-space:nowrap}
+#screen-menu .campaign-page-tab.active{background:linear-gradient(#83643c,#43341f);border-color:#f6d18a;box-shadow:inset 0 0 0 1px #f4cc8055,0 0 12px #f6bc4a30;color:#fff0c6}
+#screen-menu .campaign-page-tab.future:not(.active){opacity:.67}
+#screen-menu .campaign-page-arrow{width:31px;min-width:31px;min-height:41px;border-radius:3px;background:#172d35;border:1px solid #718b91;color:#e7d3ab}
+#screen-menu #selected-level-panel{display:grid!important;grid-template-columns:minmax(95px,31%) minmax(0,1fr);gap:10px;align-items:stretch;flex:0 0 122px;min-height:108px!important;max-height:122px!important;overflow:hidden!important;padding:5px!important;border:1px solid #b3915b!important;border-radius:4px;background:linear-gradient(120deg,#16282e,#081822);box-shadow:inset 0 1px #fbd68f22,0 6px 20px #0008}
+#screen-menu .r80-briefing-cover{position:relative;min-width:0;min-height:0;overflow:hidden;border:1px solid #a18557;border-radius:3px;background:#131e25}
+#screen-menu .r80-briefing-cover img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.88)}
+#screen-menu .r80-briefing-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,#07131ad9 100%);pointer-events:none}
+#screen-menu .r80-briefing-cover>span{position:absolute;z-index:1;left:5px;bottom:5px;padding:2px 5px;color:#ffedbd;font-size:9px;font-weight:750;letter-spacing:.08em;text-shadow:0 1px 3px #000}
+#screen-menu .r80-briefing-copy{min-width:0;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:4px;overflow:auto;padding-right:3px}
+#screen-menu .r80-briefing-copy .selected-level-top{display:flex;align-items:flex-start;gap:6px;justify-content:space-between;min-width:0}
+#screen-menu .r80-briefing-copy .selected-level-title{min-width:0}
+#screen-menu .r80-briefing-copy .selected-level-title>span{display:block;color:#ddba77;font-size:10px;line-height:1.2}
+#screen-menu .r80-briefing-copy .selected-level-title>b{font-family:Georgia,serif;font-size:clamp(14px,1.12vw,18px)!important;line-height:1.2;color:#fff1cf}
+#screen-menu .r80-briefing-copy .selected-level-desc{color:#c6d6d5;font-size:11px!important;line-height:1.24;max-height:33px;overflow:hidden}
+#screen-menu .r80-briefing-copy .selected-level-tags{display:flex;gap:3px;flex-wrap:wrap;max-height:22px;overflow:hidden}
+#screen-menu .r80-briefing-copy .selected-level-tag{font-size:9px!important;padding:2px 4px!important;line-height:1.1}
+#screen-menu .r80-action-row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:0 0 35px;min-height:35px}
+#screen-menu .r80-action-hint{font-size:10px;color:#bfc8c6;letter-spacing:.02em}
+#screen-menu .r80-campaign-start{display:flex;align-items:center;justify-content:center;gap:5px;padding:5px 15px;height:34px;min-width:134px;border:1px solid #ffe0a6;border-radius:4px;background:linear-gradient(180deg,#ecd08c,#a98141);color:#15232a;font-weight:900;font-size:12px;cursor:pointer;box-shadow:inset 0 1px #ffffd066,0 4px 13px #0009}
+#screen-menu .r80-campaign-start img{width:20px;height:20px;filter:drop-shadow(0 1px 1px #0005)}
+#screen-menu .r80-campaign-start:active,#screen-menu .r80-campaign-toolbar button:active{transform:translateY(1px)}
+#screen-menu #level-selector{flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow-y:auto;overflow-x:hidden!important;display:flex;flex-direction:column;gap:8px;padding:2px 4px 4px 1px;scroll-behavior:smooth;scrollbar-color:#9e8050 #07151e;scrollbar-width:thin}
+#screen-menu #level-selector .world-card{position:relative;display:grid!important;grid-template-columns:minmax(100px,31%) minmax(0,1fr);grid-template-rows:minmax(38px,1fr) minmax(40px,1fr);column-gap:9px;row-gap:4px;min-height:108px!important;max-height:135px!important;padding:5px!important;flex:none;border:1px solid #66747a;background:linear-gradient(110deg,#0d1b25,#172e36 60%,#091924);border-radius:4px;box-shadow:inset 0 1px #f6d79621,0 5px 14px #0005;overflow:hidden;animation:none}
+#screen-menu #level-selector .world-card::before{background:none!important;opacity:0!important}
+#screen-menu #level-selector .world-card.current-world{border-color:#edca7a;box-shadow:inset 0 0 0 1px #e8c58066,0 0 15px #e8b5542b}
+#screen-menu #level-selector .world-card.locked-world{border-color:#3e5761}
+#screen-menu .r80-world-scene{grid-column:1;grid-row:1/3;min-width:0;min-height:0;position:relative;overflow:hidden;border:1px solid #957647;border-radius:3px;background:#08141b}
+#screen-menu .r80-world-scene img{width:100%;height:100%;object-fit:cover;display:block}
+#screen-menu .r80-world-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0000 45%,#03101bcc)}
+#screen-menu .r80-scene-ordinal{position:absolute;z-index:1;left:5px;bottom:6px;background:#07161bb5;border:1px solid #cfb0778c;border-radius:2px;padding:2px 5px;color:#f3d28b;font-weight:800;font-size:9px;letter-spacing:.07em}
+#screen-menu .locked-world .r80-world-scene img{filter:saturate(.62) brightness(.72)}
+#screen-menu #level-selector .world-card-head{grid-column:2;grid-row:1;display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:6px;align-items:center;margin:0!important;min-height:0;min-width:0}
+#screen-menu .world-card-head .world-icon{width:28px;height:28px;padding:2px;border:1px solid #8b764e;border-radius:50%;background:#0c1f29;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#screen-menu .world-card-head .world-icon img{width:23px!important;height:23px!important;object-fit:contain}
+#screen-menu .world-card-head .world-title{min-width:0;overflow:hidden;max-width:100%}
+#screen-menu .world-card-head .world-title>b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:750 clamp(12px,.91vw,15px)/1.25 Georgia,serif;color:#ffeac3}
+#screen-menu .world-card-head .world-title>span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:10px;line-height:1.35;color:#becdcc}
+#screen-menu .world-card-head .world-progress{font-size:11px;line-height:1.2;text-align:right;color:#f0d098;font-weight:800;white-space:nowrap}
+#screen-menu .world-card-head .world-progress .world-stars{font-size:9px}
+#screen-menu #level-selector .rb60-world-progress{display:none!important}
+#screen-menu #level-selector .world-levels{grid-column:2;grid-row:2;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;align-items:stretch;margin:0;padding:0;min-width:0}
+#screen-menu #level-selector .level-btn{min-width:0!important;min-height:39px!important;height:43px!important;max-height:43px;padding:4px 2px!important;gap:1px;border:1px solid #496e79;border-radius:3px;background:linear-gradient(#21404b,#152a35);color:#eee5cd;font-family:Georgia,serif;font-size:14px!important;box-shadow:inset 0 1px #b5d1c91a}
+#screen-menu #level-selector .level-btn::before{display:none!important}
+#screen-menu #level-selector .level-btn.current-level{background:linear-gradient(#a17f4f,#644d2f);border-color:#ffe2a6;box-shadow:inset 0 0 0 1px #ffe9b177,0 0 13px #ffca644a}
+#screen-menu #level-selector .level-btn[data-r80-status^="CLEARED"]{background:linear-gradient(#345248,#18372e);border-color:#7fae8c}
+#screen-menu #level-selector .level-btn.locked{background:linear-gradient(#10222d,#081924);border-color:#284450;opacity:.65;color:#a1afb2;cursor:not-allowed}
+#screen-menu #level-selector .level-btn .level-best{font-size:10px;letter-spacing:0;color:#f5d58e;line-height:1;min-height:10px}
+#screen-menu #level-selector .level-btn .r80-level-lock{width:13px;height:13px;vertical-align:middle}
+#screen-menu #level-selector .level-btn .r80-level-empty{color:#78909b}
+#screen-menu .r80-boss-mark{position:absolute;right:2px;top:1px;display:flex;opacity:.82}
+#screen-menu .r80-boss-mark .r78-icon{width:12px;height:12px}
+#screen-menu .r80-reveal{animation:r80-highlight .8s ease-out both!important}
+@keyframes r80-highlight{0%{filter:brightness(1.3)}100%{filter:brightness(1)}}
+/* Atlas: real functional buttons and world imagery; NEVER a baked screenshot. */
+#screen-menu .r80-atlas-panel[hidden]{display:none!important}
+#screen-menu .r80-atlas-panel{position:absolute;inset:7px;z-index:35;display:flex;flex-direction:column;gap:9px;padding:13px;border:1px solid #efce8b;border-radius:6px;background:linear-gradient(150deg,#0b1a22f7,#08121dfd 70%);box-shadow:0 14px 55px #000e,inset 0 0 0 3px #bc925437;overflow:hidden;backdrop-filter:blur(14px)}
+#screen-menu .r80-atlas-head{flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;gap:9px;padding:2px 3px 10px;border-bottom:1px solid #b08b5080}
+#screen-menu .r80-atlas-head>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+#screen-menu .r80-atlas-head span{font-size:9px;color:#d7b875;font-weight:900;letter-spacing:.15em}
+#screen-menu .r80-atlas-head h2{margin:0;font:750 clamp(18px,1.35vw,23px)/1.15 Georgia,serif;color:#ffebc2;letter-spacing:.055em}
+#screen-menu .r80-atlas-head small{font-size:10px;color:#c6d5d1}
+#screen-menu #r80-atlas-close{display:grid;place-items:center;flex:none;width:35px;height:35px;background:#152a30;border:1px solid #8b7858;border-radius:3px;cursor:pointer}
+#screen-menu #r80-atlas-close img{width:22px;height:22px}
+#screen-menu .r80-atlas-grid{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding:2px 4px 7px 1px;align-content:start;scrollbar-color:#9e8050 #081720;scrollbar-width:thin}
+#screen-menu .r80-atlas-tile{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-width:0;min-height:123px;padding:8px;text-align:left;border:1px solid #64747b;border-radius:4px;background:#11242e;cursor:pointer;box-shadow:inset 0 0 0 1px #0005;transition:border-color .17s,filter .17s,transform .17s}
+#screen-menu .r80-atlas-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3}
+#screen-menu .r80-atlas-vignette{position:absolute;inset:0;z-index:-2;background:linear-gradient(0deg,#06141af7 0%,#06141a9b 39%,#0a171900 95%)}
+#screen-menu .r80-atlas-crest{position:absolute;right:7px;top:6px;width:28px;height:28px;background:#08181cc9;border:1px solid #d2b1737c;border-radius:50%;display:grid;place-items:center}
+#screen-menu .r80-atlas-crest img{width:23px;height:23px}
+#screen-menu .r80-atlas-info{display:flex;flex-direction:column;gap:3px;min-width:0;max-width:100%}
+#screen-menu .r80-atlas-index{font-size:9px;color:#e3c27e;font-weight:800;letter-spacing:.07em}
+#screen-menu .r80-atlas-info strong{font:750 clamp(12px,.94vw,15px)/1.2 Georgia,serif;color:#fff0cc;text-shadow:0 2px 5px #000}
+#screen-menu .r80-atlas-info small{font-size:10px;color:#e0dec7;font-weight:700}
+#screen-menu .r80-atlas-state{position:absolute;right:7px;bottom:7px;font-size:8px;color:#d2dfe0;font-weight:800;letter-spacing:.05em}
+#screen-menu .r80-atlas-state img{width:12px;height:12px;vertical-align:middle}
+#screen-menu .r80-atlas-tile.is-selected{border-color:#f3d48f;box-shadow:inset 0 0 0 1px #f2d18b,0 0 11px #edb4583d}
+#screen-menu .r80-atlas-tile.is-locked{filter:saturate(.61)}
+#screen-menu .r80-atlas-tile:hover{border-color:#ffe1a2;filter:saturate(1.13) brightness(1.07)}
+#screen-menu .r80-atlas-note{margin:0;color:#aabbc0;font-size:10px;line-height:1.25}
+#screen-menu .r80-atlas-tile:focus-visible,#screen-menu .level-btn:focus-visible,#screen-menu .r80-campaign-toolbar button:focus-visible,#screen-menu .r80-campaign-start:focus-visible,#screen-menu #r80-atlas-close:focus-visible{outline:2px solid #ffdd89;outline-offset:1px}
+/* 720px desktop iframe: prioritize 5 playable level buttons, not ornamental text. */
+@media (min-width:801px) and (max-height:800px){
+ #screen-menu .menu-campaign-shell{gap:5px!important;padding:11px!important}
+ #screen-menu #selected-level-panel{flex-basis:93px;max-height:93px!important;min-height:90px!important}
+ #screen-menu .r80-briefing-copy .selected-level-title>b{font-size:14px!important}
+ #screen-menu .r80-briefing-copy .selected-level-desc{max-height:28px}
+ #screen-menu #campaign-page-nav{min-height:34px}
+ #screen-menu .campaign-page-tab,#screen-menu .campaign-page-arrow{min-height:34px}
+ #screen-menu #level-selector .world-card{min-height:99px!important;max-height:110px!important}
+ #screen-menu .r80-action-row{flex-basis:30px;min-height:30px}
+ #screen-menu .r80-campaign-start{height:30px}
+}
+/* Landscape 844x390, 568x320: campaign is its own full-size view. */
+@media (orientation:landscape) and (max-height:600px){
+ body[data-r49-menu="campaign"] #screen-menu .menu-campaign-shell{display:flex!important;position:relative!important;flex-direction:column!important;grid-template-columns:none!important;grid-template-rows:none!important;overflow:hidden!important;padding:6px 8px!important;gap:3px!important}
+ #screen-menu .rb60-campaign-header{min-height:26px;padding:0!important;gap:6px}
+ #screen-menu .rb60-campaign-heading-copy{min-width:0}
+ #screen-menu .rb60-campaign-heading-copy .rb60-overline{display:none!important}
+ #screen-menu #campaign-heading-title{font-size:clamp(13px,2.2vw,18px)!important}
+ #screen-menu #campaign-progress{font-size:9px!important}
+ #screen-menu .r80-campaign-toolbar{min-height:26px;max-height:26px;gap:4px}
+ #screen-menu .r80-campaign-toolbar button{min-height:27px;height:27px;padding:3px 6px;font-size:10px!important}
+ #screen-menu .r80-campaign-toolbar img{height:15px;width:15px}
+ #screen-menu .r80-frontline span{padding:2px}
+ #screen-menu #campaign-page-nav{display:flex!important;min-height:27px;max-height:27px;gap:3px}
+ #screen-menu .campaign-page-tabs{gap:3px}
+ #screen-menu .campaign-page-tab,#screen-menu .campaign-page-arrow{min-height:27px!important;height:27px!important;padding:2px!important;font-size:10px!important}
+ #screen-menu .campaign-page-tab>small{display:none!important}
+ #screen-menu .campaign-page-arrow{width:25px;min-width:25px}
+ #screen-menu .rb60-selected-heading{display:none!important}
+ #screen-menu #selected-level-panel{grid-template-columns:1fr;flex-basis:52px;min-height:50px!important;max-height:53px!important;padding:4px 6px!important;overflow:hidden!important}
+ #screen-menu .r80-briefing-cover{display:none!important}
+ #screen-menu .r80-briefing-copy{gap:1px;overflow:hidden}
+ #screen-menu .r80-briefing-copy .selected-level-title>b{font-size:12px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ #screen-menu .r80-briefing-copy .selected-level-title>span{font-size:9px}
+ #screen-menu .r80-briefing-copy .selected-level-desc{font-size:10px!important;line-height:1.1;max-height:12px;white-space:nowrap;text-overflow:ellipsis}
+ #screen-menu .r80-briefing-copy .selected-level-tags{display:none}
+ #screen-menu .r80-action-row{flex-basis:27px;min-height:27px}
+ #screen-menu .r80-action-hint{display:none}
+ #screen-menu .r80-campaign-start{width:100%;height:27px;min-width:0;min-height:27px;padding:2px 8px;font-size:11px}
+ #screen-menu #level-selector{flex:1 1 auto!important;min-height:44px!important;padding:1px;gap:4px;overflow-y:auto!important}
+ #screen-menu #level-selector .world-card{min-height:73px!important;max-height:82px!important;grid-template-columns:minmax(76px,24%) minmax(0,1fr);grid-template-rows:27px 34px;padding:3px!important;gap:2px 4px}
+ #screen-menu .r80-scene-ordinal{font-size:8px;padding:1px 3px}
+ #screen-menu .world-card-head .world-icon{width:22px;height:22px}
+ #screen-menu .world-card-head .world-icon img{width:19px!important;height:19px!important}
+ #screen-menu #level-selector .world-card-head{grid-template-columns:22px minmax(0,1fr) auto;gap:3px}
+ #screen-menu .world-card-head .world-title>b{font-size:clamp(10px,1.6vw,13px)}
+ #screen-menu .world-card-head .world-title>span{display:none}
+ #screen-menu .world-card-head .world-progress{font-size:9px}
+ #screen-menu #level-selector .world-levels{gap:3px}
+ #screen-menu #level-selector .level-btn{height:32px!important;max-height:32px!important;min-height:32px!important;font-size:12px!important;padding:1px!important}
+ #screen-menu #level-selector .level-btn .level-best{font-size:9px}
+ #screen-menu .r80-atlas-panel{inset:3px;padding:7px;gap:4px}
+ #screen-menu .r80-atlas-head{padding:0 2px 5px}
+ #screen-menu .r80-atlas-head h2{font-size:14px}
+ #screen-menu .r80-atlas-head span,#screen-menu .r80-atlas-head small{font-size:8px}
+ #screen-menu #r80-atlas-close{height:29px;width:29px}
+ #screen-menu .r80-atlas-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+ #screen-menu .r80-atlas-tile{min-height:83px;padding:5px}
+ #screen-menu .r80-atlas-index{font-size:8px}
+ #screen-menu .r80-atlas-info strong{font-size:clamp(9px,1.5vw,12px)}
+ #screen-menu .r80-atlas-info small{font-size:8px}
+ #screen-menu .r80-atlas-crest{width:21px;height:21px;top:3px;right:3px}
+ #screen-menu .r80-atlas-crest img{width:17px;height:17px}
+ #screen-menu .r80-atlas-state{display:none}
+ #screen-menu .r80-atlas-note{font-size:9px}
+}
+@media (orientation:landscape) and (max-height:350px){
+ #screen-menu .r80-campaign-toolbar{min-height:24px;max-height:24px}
+ #screen-menu .r80-frontline{font-size:0!important}
+ #screen-menu .r80-frontline span{font-size:10px}
+ #screen-menu .r80-atlas-open{font-size:10px!important}
+ #screen-menu .r80-atlas-panel{padding:5px}
+}
+@media (prefers-reduced-motion:reduce){#screen-menu .r80-reveal{animation:none!important}#screen-menu .r80-atlas-tile{transition:none!important}#screen-menu #level-selector{scroll-behavior:auto}}
+/* R80 mobile finishing pass: remove the old redundant select+footer, use new visible controls. */
+@media (orientation:landscape) and (max-height:600px){
+ body[data-ui-skin="royal-bastion"][data-r49-menu="campaign"] #screen-menu .r49-world-label,
+ body[data-ui-skin="royal-bastion"][data-r49-menu="campaign"] #screen-menu .r49-campaign-actions{display:none!important}
+ body[data-ui-skin="royal-bastion"][data-r49-menu="campaign"] #screen-menu .rb60-campaign-header{display:flex!important;position:relative!important;flex-direction:row!important;align-items:center!important;justify-content:space-between!important;flex:0 0 32px!important;max-height:32px!important;gap:6px!important;grid-column:auto!important;grid-row:auto!important}
+ body[data-ui-skin="royal-bastion"][data-r49-menu="campaign"] #screen-menu .rb60-campaign-header-mark{display:none!important}
+ body[data-ui-skin="royal-bastion"][data-r49-menu="campaign"] #screen-menu #campaign-heading-title{display:block!important;font-size:clamp(13px,2vw,18px)!important}
+ body[data-ui-skin="royal-bastion"][data-r49-menu="campaign"] #screen-menu .rb60-campaign-back{display:inline-flex!important;align-items:center;justify-content:center;flex:0 0 auto;min-height:28px!important;padding:3px 10px;font-size:10px!important}
+ body[data-ui-skin="royal-bastion"][data-r49-menu="campaign"] #screen-menu #level-selector{grid-column:auto!important;grid-row:auto!important;flex:1 1 auto!important;overflow-y:auto!important}
+ body[data-ui-skin="royal-bastion"][data-r49-menu="campaign"] #screen-menu #selected-level-panel{grid-column:auto!important;grid-row:auto!important;flex:0 0 48px!important;max-height:48px!important;min-height:48px!important}
+ body[data-ui-skin="royal-bastion"][data-r49-menu="campaign"] #screen-menu .r80-action-row{grid-column:auto!important;grid-row:auto!important}
+}
+/* Touch-target revision: preserve accessible controls even on 568x320. */
+@media (orientation:landscape) and (max-height:600px){
+ body[data-ui-skin="royal-bastion"][data-r49-menu="campaign"] #screen-menu .rb60-campaign-header{flex-basis:33px!important;min-height:33px!important;max-height:33px!important}
+ #screen-menu .r80-campaign-toolbar{min-height:33px!important;max-height:33px!important}
+ #screen-menu .r80-campaign-toolbar button{min-height:33px!important;height:33px!important}
+ #screen-menu #campaign-page-nav{min-height:33px!important;max-height:33px!important}
+ #screen-menu .campaign-page-tab,#screen-menu .campaign-page-arrow{min-height:33px!important;height:33px!important}
+ #screen-menu .r80-action-row{flex-basis:38px!important;min-height:38px!important}
+ #screen-menu .r80-campaign-start{min-height:38px!important;height:38px!important}
+ #screen-menu #level-selector .world-card{grid-template-rows:28px 40px;min-height:84px!important;max-height:91px!important}
+ #screen-menu #level-selector .level-btn{min-height:39px!important;height:39px!important;max-height:39px!important}
+ #screen-menu .r80-atlas-tile{min-height:93px!important}
+ #screen-menu #r80-atlas-close{min-height:33px;height:33px;width:33px}
+}
+
+/* R93.2: every world/level/atlas preview derives from the same 5:3 arena. */
+#screen-menu .r80-briefing-cover img,
+#screen-menu .r80-world-scene img,
+#screen-menu .r80-atlas-cover,
+#screen-meta .r83-world-cover,
+#screen-meta .r83-chapter-cover {object-position:center center;}
