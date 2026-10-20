@@ -1,0 +1,108 @@
+/* Tower Defense: Reforged R95.2 — MOBILE LAYOUT ONLY.
+   The full logical canvas remains 1000x600 (5:3); all existing hit coordinates
+   and event handlers are retained. The only map-size increase comes from
+   reclaiming vertical pixels, not stretching, cropping or hiding the map.
+   Body class is assigned solely from viewport geometry in r93-mobile-battle.js.
+   In all tower/upgrade/paused states the same geometry is used. */
+
+@media (orientation:landscape) and (min-width:740px) and (max-width:1100px) and (min-height:350px) and (max-height:480px) and (min-aspect-ratio:19/10) {
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #game-wrapper,
+  html.device-touch body.r95-map-priority.rf-upgrade:is([data-scene="play"],[data-scene="pause"]) #game-wrapper {
+    grid-template-rows:28px minmax(0,1fr) 44px!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    padding:1px 2px 2px!important;
+    gap:2px!important;
+    box-sizing:border-box!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-header {
+    height:28px!important;min-height:28px!important;max-height:28px!important;
+    box-sizing:border-box!important;overflow:hidden!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud {
+    height:26px!important;min-height:26px!important;max-height:26px!important;
+    align-self:center!important;box-sizing:border-box!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .stat {
+    min-height:0!important;height:100%!important;
+    box-sizing:border-box!important;
+    padding:1px 3px!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-label {
+    font-size:8px!important;line-height:1.1!important;margin-bottom:0!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-value,
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .hud-world-copy .hud-value {
+    font-size:11px!important;line-height:1.12!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions {
+    height:28px!important;min-height:28px!important;max-height:28px!important;
+    align-self:center!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions #battle-speed,
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #game-wrapper .battle-actions #pause-btn {
+    height:28px!important;min-height:28px!important;max-height:28px!important;
+    flex-basis:28px!important;width:28px!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail {
+    height:44px!important;min-height:44px!important;max-height:44px!important;
+    bottom:2px!important;box-sizing:border-box!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons {
+    padding:1px!important;gap:2px!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn {
+    grid-template-rows:minmax(15px,1fr) auto auto!important;
+    padding:1px 1px!important;gap:0!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn .tower-name {font-size:9px!important;line-height:1!important;}
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn .tower-cost {font-size:9px!important;line-height:1!important;}
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #r49-wave-state {
+    bottom:44px!important;
+    height:24px!important;max-height:24px!important;min-height:24px!important;
+  }
+  /* 5 spells remain simultaneously visible at <=360px dock widths, while the
+     header, card borders and gaps take less room from the workshop text. */
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #bottom-panel {
+    padding:2px!important;gap:2px!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel,
+  html.device-touch body.r95-map-priority.rf-upgrade:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel {
+    display:grid!important;
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    grid-template-rows:minmax(0,1fr)!important;
+    height:56px!important;min-height:56px!important;max-height:56px!important;
+    flex:0 0 56px!important;gap:2px!important;padding:1px!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel > button[data-skill-id] {
+    grid-template-rows:23px minmax(11px,1fr) 10px!important;
+    padding:1px!important;gap:0!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel .skill-icon {
+    height:22px!important;min-height:22px!important;max-height:22px!important;
+    width:22px!important;min-width:22px!important;max-width:22px!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel :is(.skill-name,.skill-cooldown) {
+    font-size:10px!important;line-height:1.05!important;
+  }
+  html.device-touch body.r95-map-priority:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-reserve {
+    margin-top:0!important;min-height:0!important;
+  }
+}
+
+/* Sub-230px docks genuinely require a two-row five-spell grid.  Reduce only
+   the icon/row padding; keep all spell controls accessible and the inspector
+   visible on the smallest 568x320 and 667x375 phones. */
+@media (orientation:landscape) and (max-width:1100px) and (max-height:600px) {
+  html.device-touch body.r93-narrow-spells:not(.r95-map-priority):is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel,
+  html.device-touch body.r93-narrow-spells:not(.r95-map-priority).rf-upgrade:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel {
+    flex-basis:86px!important;min-height:86px!important;height:86px!important;max-height:86px!important;
+    gap:2px!important;
+  }
+  html.device-touch body.r93-narrow-spells:not(.r95-map-priority):is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel > button[data-skill-id] {
+    grid-template-rows:17px 10px 10px!important;
+  }
+  html.device-touch body.r93-narrow-spells:not(.r95-map-priority):is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel .skill-icon {
+    height:17px!important;min-height:17px!important;max-height:17px!important;
+    width:18px!important;min-width:18px!important;max-width:18px!important;
+  }
+}

@@ -1,0 +1,82 @@
+/* R81 / 1.6.11: handcrafted HQ layer, all upgrades/economics in original engine */
+#screen-meta .meta-shell{background:linear-gradient(168deg,rgba(5,17,26,.93),rgba(9,30,39,.96)),url("images/ui-r79/menu_environment_hd.webp") center 46%/cover;border:1px solid #85724b;box-shadow:0 12px 48px #000a,inset 0 0 0 3px #071824,inset 0 0 0 4px #51442e}
+#screen-meta .r65-command-head{background:linear-gradient(90deg,rgba(13,35,44,.94),rgba(20,42,47,.68));border-bottom:1px solid #98815a;padding:10px 14px;border-radius:8px}
+#screen-meta .meta-top{background:linear-gradient(90deg,#0a222ca8,#1b2e3399);padding:7px;border-radius:10px}
+#screen-meta .meta-rank-card{border-color:#b29b64;background:linear-gradient(105deg,#213c3c,#102631)}
+#screen-meta .meta-stat-card{border-color:#626c60;background:linear-gradient(150deg,#1a363d,#0b212a)}
+#screen-meta .meta-tabs .meta-tab{transition:border-color .15s,transform .15s,background .15s}
+#screen-meta .meta-tabs .meta-tab.active{background:linear-gradient(120deg,#554529,#1c3434);border-color:#d7ad63;box-shadow:inset 0 0 0 1px #e7bb5733}
+#screen-meta .r81-command-status{min-height:94px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:16px 18px;margin:4px 0 10px;border:1px solid #ad8e54;border-radius:10px;background:linear-gradient(90deg,#0d2430f0,#163638ca 63%,#1423278c),url("images/ui-r79/menu_environment_hd.webp") center 41%/cover;box-shadow:inset 3px 0 0 #d6a35c,0 8px 20px #0004}
+#screen-meta .r81-command-status strong{color:#f9e0a8;font:700 clamp(18px,2vw,28px)/1.15 Georgia,serif}
+#screen-meta .r81-command-kicker{letter-spacing:.2em;color:#ebca86;font-size:10px;font-weight:700}
+#screen-meta .r81-command-status>span:last-child{color:#d7e0d4;font-size:12px}
+#screen-meta .r81-groups{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
+#screen-meta .r81-groups button{appearance:none;cursor:pointer;padding:8px 15px;min-height:40px;border:1px solid #70827c;background:#102831;color:#dce5de;font-size:12px;font-weight:750;border-radius:6px;letter-spacing:.07em}
+#screen-meta .r81-groups button.active,#screen-meta .r81-groups button:hover{background:linear-gradient(140deg,#665230,#2c493e);border-color:#e1ba70;color:#ffeac0}
+#screen-meta #castle-ui{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:12px}
+#screen-meta .castle-card.r65-upgrade{position:relative;overflow:hidden;gap:9px;min-height:258px;border:1px solid #5d7676;border-radius:8px;background:linear-gradient(145deg,#254044eb,#102730f5 70%),radial-gradient(circle at 90% 0%,#e6bf7138,transparent 50%);box-shadow:inset 0 1px #ffffff1e,0 7px 18px #0006;padding:16px}
+#screen-meta .castle-card.r65-upgrade::before{content:'';position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,transparent,#d2a45e,transparent);opacity:.78}
+#screen-meta .castle-card.r65-upgrade.affordable{border-color:#b0a46c}
+#screen-meta .castle-card.r65-upgrade.maxed{border-color:#619e80;background:linear-gradient(145deg,#244239,#10292e)}
+#screen-meta .r65-upgrade-icon{width:50px;min-width:50px;height:50px;border:1px solid #8b7855;border-radius:7px;background:linear-gradient(150deg,#2b4449,#0c1b27);display:grid;place-items:center}
+#screen-meta .r65-upgrade-icon img{width:38px;height:38px;object-fit:contain}
+#screen-meta .r65-upgrade-head{display:flex;gap:9px;align-items:center}
+#screen-meta .r65-upgrade-title{min-width:0;flex:1}
+#screen-meta .r65-upgrade-title h3{font:700 17px/1.2 Georgia,serif;color:#f7e3bb;overflow-wrap:anywhere}
+#screen-meta .r65-upgrade-title small{color:#cdb784;font-size:9px;letter-spacing:.11em}
+#screen-meta .r65-upgrade-rank{flex:none;font-weight:800;color:#f6d99e;font-size:13px}
+#screen-meta .castle-card.r65-upgrade p{font-size:13px;line-height:1.45;margin:4px 0;flex:1}
+#screen-meta .castle-card.r65-upgrade .r65-upgrade-actions{margin-top:auto}
+#screen-meta .castle-card.r65-upgrade .btn-upgrade:not(:disabled){border-color:#d2b77e;background:linear-gradient(155deg,#ad7f40,#785128);color:#fff6d7;box-shadow:inset 0 1px #fff6}
+#screen-meta .castle-card.r65-upgrade.maxed .btn-upgrade{background:#193c34;border-color:#5c917f;color:#bfe6d0}
+#screen-meta .r81-category-label{position:absolute;top:0;right:13px;font-size:9px;color:#d2c18d;letter-spacing:.13em;background:#10242a;padding:3px 6px;border-radius:0 0 4px 4px}
+#screen-meta .r81-hidden{display:none!important}
+@media(max-width:780px),(max-height:460px) and (orientation:landscape){
+ #screen-meta .meta-shell{padding:7px;gap:5px}
+ #screen-meta .r81-command-status{min-height:49px;margin:0 0 5px;padding:5px 10px}
+ #screen-meta .r81-command-status strong{font-size:16px}
+ #screen-meta .r81-command-status>span:last-child{font-size:10px}
+ #screen-meta .r81-groups{flex-wrap:nowrap;gap:4px;overflow-x:auto;margin:0 0 5px}
+ #screen-meta .r81-groups button{padding:4px 8px;min-height:32px;font-size:10px;white-space:nowrap}
+ #screen-meta #castle-ui{grid-template-columns:repeat(auto-fit,minmax(min(100%,185px),1fr));gap:6px}
+ #screen-meta .castle-card.r65-upgrade{min-height:170px;padding:9px;gap:5px}
+ #screen-meta .r65-upgrade-title h3{font-size:14px}
+ #screen-meta .r65-upgrade-icon{width:35px;height:35px;min-width:35px}
+ #screen-meta .r65-upgrade-icon img{width:26px;height:26px}
+}
+@media(prefers-reduced-motion:reduce){#screen-meta .meta-tabs .meta-tab{transition:none}}
+
+/* R91 global UX gate: show every HQ section without undiscoverable sideways scrolling.
+   The content panel itself remains scrollable on small landscape devices. */
+@media (orientation:landscape) and (max-height:600px) and (max-width:900px){
+ html.device-touch body[data-ui-skin="royal-bastion"] #screen-meta .meta-tabs{
+  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  grid-template-rows:repeat(2,minmax(0,1fr))!important;
+  min-height:72px!important;height:72px!important;max-height:72px!important;
+  overflow:hidden!important;gap:4px!important;padding:2px!important;align-content:stretch!important;
+ }
+ html.device-touch body[data-ui-skin="royal-bastion"] #screen-meta .meta-tabs .meta-tab{
+  min-width:0!important;width:100%!important;max-width:none!important;min-height:0!important;height:100%!important;
+  padding:3px 4px!important;gap:4px!important;scroll-snap-align:none!important;
+ }
+ html.device-touch body[data-ui-skin="royal-bastion"] #screen-meta .meta-tabs .r65-tab-icon{
+  width:17px!important;height:17px!important;min-width:17px!important;
+ }
+ html.device-touch body[data-ui-skin="royal-bastion"] #screen-meta .meta-tabs .r65-tab-copy b{
+  font-size:9px!important;line-height:1.1!important;white-space:normal!important;overflow-wrap:anywhere!important;
+ }
+ html.device-touch body[data-ui-skin="royal-bastion"] #screen-meta .meta-tabs .r65-tab-copy small{display:none!important;}
+}
+@media (orientation:landscape) and (max-height:600px) and (min-width:701px) and (max-width:900px){
+ html.device-touch body[data-ui-skin="royal-bastion"] #screen-meta .meta-tabs{
+  grid-template-columns:repeat(8,minmax(0,1fr))!important;grid-template-rows:minmax(0,1fr)!important;
+  min-height:43px!important;height:43px!important;max-height:43px!important;
+ }
+ html.device-touch body[data-ui-skin="royal-bastion"] #screen-meta .meta-tabs .meta-tab{padding:3px 2px!important;gap:2px!important;}
+ html.device-touch body[data-ui-skin="royal-bastion"] #screen-meta .meta-tabs .r65-tab-icon{width:16px!important;height:16px!important;min-width:16px!important;}
+}
+
+/* Native art assets instead of emoji placeholders in headquarters plan/adviser. */
+#screen-meta .progress-plan-step .step-icon img{width:27px;height:27px;object-fit:contain;display:block;filter:drop-shadow(0 2px 4px #0008);}
+#screen-meta #progress-advisor .r91-advisor-icon{display:inline-block;width:22px;height:22px;vertical-align:middle;margin-right:5px;object-fit:contain;}
+@media(max-height:440px){#screen-meta .progress-plan-step .step-icon img{width:22px;height:22px;}}

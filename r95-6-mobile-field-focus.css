@@ -1,0 +1,182 @@
+/* R95.6 — landscape phone gameplay-first layout.
+   Move the EXISTING seven tower buttons and EXISTING intel to the right dock;
+   never duplicate click targets, crop the 5:3 map, or size from selected tower.
+   Desktop and tall tablets retain the R95.5 layout. */
+.r956-wave-icon {display:none!important;}
+@media (orientation:landscape) and (max-width:1100px) and (max-height:600px) {
+  /* Restore real local SVG artwork instead of the old forced display:none. */
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .stat-icon.r49-icon,
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .r956-wave-icon {
+    display:block!important;visibility:visible!important;
+    flex:0 0 10px!important;width:10px!important;min-width:10px!important;height:10px!important;
+    object-fit:contain!important;margin:0!important;opacity:1!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .stat {gap:2px!important;padding:1px 2px!important;}
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #hud .stat > div {flex:1 1 auto!important;min-width:0!important;}
+  /* Only the MOBILE waiting card is minimal; desktop workshop is unchanged. */
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle.r944-idle {
+    display:flex!important;align-items:stretch!important;justify-content:center!important;
+    padding:6px!important;overflow:hidden!important;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]).rf-upgrade #r84-inspect-idle.r944-idle {display:none!important;}
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle .r956-idle-cue {
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    flex:1;min-height:0;gap:5px;padding:6px;
+    color:#e5ddc6;border:1px dashed #5e8c8c;border-radius:7px;
+    background:radial-gradient(ellipse at center,#38656b30,transparent 73%);
+    text-align:center;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle .r956-idle-cue img {
+    display:block;width:30px;height:30px;max-height:28%;object-fit:contain;opacity:.75;
+  }
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle .r956-idle-cue strong {font:750 11px/1.2 system-ui,sans-serif;color:#eacb91;}
+  html.device-touch body:is([data-scene="play"],[data-scene="pause"]) #r84-inspect-idle .r956-idle-cue span {font:500 10px/1.2 system-ui,sans-serif;color:#a9c5c1;}
+}
+@media (orientation:landscape) and (min-width:740px) and (max-width:1100px) and (min-height:350px) and (max-height:480px) and (min-aspect-ratio:19/10) {
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) {
+    --r956-rail:76px;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #game-wrapper,
+  html.device-touch body.r956-field-focus.rf-upgrade:is([data-scene="play"],[data-scene="pause"]) #game-wrapper {
+    grid-template-rows:28px minmax(0,1fr) 0px!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    padding:1px 2px 2px!important;gap:2px!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #game-wrapper #canvas-shell {
+    min-width:0!important;min-height:0!important;overflow:hidden!important;
+  }
+  /* Reserve a real, reachable lower-right tower bank. No duplicate buttons. */
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail,
+  html.device-touch body.r956-field-focus.rf-upgrade:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail {
+    display:block!important;position:fixed!important;left:auto!important;
+    right:2px!important;bottom:2px!important;
+    width:calc(var(--r56-right) - 4px)!important;
+    height:74px!important;min-height:74px!important;max-height:74px!important;
+    margin:0!important;z-index:90!important;box-sizing:border-box!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons {
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    grid-template-rows:repeat(2,minmax(0,1fr))!important;
+    align-items:stretch!important;gap:2px!important;padding:1px!important;
+    width:100%!important;height:100%!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn {
+    padding:1px!important;gap:0!important;min-width:0!important;min-height:0!important;
+    grid-template-rows:minmax(11px,1fr) 10px 10px!important;
+    align-items:center!important;box-sizing:border-box!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn .tower-name {
+    font-size:8px!important;line-height:1!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn .tower-cost {
+    font-size:8.5px!important;line-height:1!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn.tower-locked .tower-cost {
+    font-size:7.7px!important;
+  }
+  /* The live command dock ends just above the bottom tower bank. */
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel {
+    position:fixed!important;top:0!important;left:auto!important;right:0!important;
+    bottom:var(--r956-rail)!important;
+    width:var(--r56-right)!important;
+    height:calc(100dvh - var(--r956-rail))!important;
+    min-height:0!important;max-height:calc(100dvh - var(--r956-rail))!important;
+    padding:2px!important;gap:2px!important;overflow:hidden!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #wave-prep.show {
+    flex:0 0 38px!important;height:38px!important;min-height:38px!important;max-height:38px!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r84-spell-heading {
+    flex:0 0 16px!important;min-height:16px!important;height:16px!important;max-height:16px!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel,
+  html.device-touch body.r956-field-focus.rf-upgrade:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel {
+    display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;grid-template-rows:1fr!important;
+    flex:0 0 49px!important;height:49px!important;min-height:49px!important;max-height:49px!important;
+    padding:1px!important;gap:2px!important;overflow:hidden!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel > button[data-skill-id] {
+    grid-template-rows:20px 12px 10px!important;gap:0!important;padding:1px!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel .skill-icon {
+    width:20px!important;height:19px!important;min-width:20px!important;min-height:19px!important;max-height:19px!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel :is(.skill-name,.skill-cooldown) {
+    font-size:9px!important;line-height:1!important;
+  }
+  /* Move the SAME real tactical report out of the playfield (JS reparent). */
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r49-wave-state {
+    display:flex!important;position:relative!important;
+    inset:auto!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+    flex:0 0 25px!important;order:-1!important;
+    width:100%!important;height:25px!important;min-height:25px!important;max-height:25px!important;
+    padding:1px 2px!important;margin:0!important;
+    box-sizing:border-box!important;overflow:hidden!important;
+    visibility:visible!important;opacity:1!important;transform:none!important;
+    z-index:auto!important;pointer-events:none!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r49-wave-state > :not(#r94-5-battle-intel) {display:none!important;}
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r49-wave-state #r94-5-battle-intel {
+    width:100%!important;height:100%!important;display:grid!important;
+    grid-template-columns:59px minmax(0,1fr)!important;
+    grid-template-rows:repeat(2,minmax(0,1fr))!important;
+    gap:1px 2px!important;padding:0!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r94-5-battle-intel .r945-phase {
+    grid-column:1!important;grid-row:1/3!important;
+    flex-direction:row!important;gap:2px!important;padding:1px!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r94-5-battle-intel .r945-phase img {width:12px!important;height:12px!important;flex:0 0 12px!important;}
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r94-5-battle-intel .r945-phase-text > span {font-size:0!important;}
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r94-5-battle-intel .r945-phase-text strong {font-size:11px!important;}
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r94-5-battle-intel .r945-roster,
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r94-5-battle-intel .r945-threat {
+    grid-column:2!important;min-width:0!important;display:flex!important;
+    flex-direction:row!important;align-items:center!important;
+    border:0!important;background:transparent!important;padding:0 2px!important;gap:3px!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r94-5-battle-intel .r945-roster {grid-row:1!important;}
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r94-5-battle-intel .r945-threat {grid-row:2!important;}
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r94-5-battle-intel :is(.r945-caption,.r945-enemy,#r945-threat-text) {
+    font-size:8px!important;line-height:1!important;letter-spacing:0!important;
+  }
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r94-5-battle-intel .r945-threat img {display:none!important;}
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r94-5-battle-intel :is(.r945-enemies,.r945-threat-copy){min-width:0!important;overflow:hidden!important;}
+  html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r84-inspect-reserve {
+    order:3!important;flex:1 1 0%!important;min-height:0!important;margin-top:0!important;overflow:hidden!important;
+  }
+}
+/* In a compact 4x2 bank each tile has its own real illustration, not a 1px icon strip. */
+@media (orientation:landscape) and (min-width:740px) and (max-width:1100px) and (min-height:350px) and (max-height:480px) and (min-aspect-ratio:19/10) {
+ html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn {
+   display:grid!important;grid-template-columns:21px minmax(0,1fr)!important;
+   grid-template-rows:11px 11px!important;align-content:center!important;
+   column-gap:1px!important;row-gap:0!important;
+ }
+ html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn .tower-icon-wrapper {
+   display:flex!important;grid-column:1!important;grid-row:1/3!important;
+   align-self:center!important;justify-self:center!important;
+   width:20px!important;height:22px!important;min-width:0!important;min-height:0!important;max-height:22px!important;
+ }
+ html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn .tower-icon-wrapper > img {
+   display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;
+ }
+ html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn .tower-name {
+   grid-column:2!important;grid-row:1!important;font-size:7.5px!important;line-height:1!important;
+ }
+ html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn .tower-cost {
+   grid-column:2!important;grid-row:2!important;font-size:9px!important;line-height:1!important;
+ }
+ html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #r54-tower-rail #tower-buttons > .tower-btn.tower-locked .tower-cost {
+   font-size:7.3px!important;
+ }
+}
+/* Single predictable order in idle and in .rf-upgrade. No control jumps when selecting a tower. */
+@media (orientation:landscape) and (min-width:740px) and (max-width:1100px) and (min-height:350px) and (max-height:480px) and (min-aspect-ratio:19/10) {
+ html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #wave-prep.show {order:-5!important;}
+ html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r84-spell-heading {order:-4!important;}
+ html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #skills-panel {order:-3!important;}
+ html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r49-wave-state {order:-2!important;}
+ html.device-touch body.r956-field-focus:is([data-scene="play"],[data-scene="pause"]) #bottom-panel #r84-inspect-reserve {order:0!important;}
+}
